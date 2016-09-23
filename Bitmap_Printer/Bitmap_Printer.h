@@ -15,7 +15,8 @@
  Modify parameter list of constructor. Add member fileName. 9-22-2016
  Add set function for background image. 9-22-2016
  Declared COLOR enum to be global. 9-22-2016
- Change class name to be Bitmap_Printer
+ Change class name to be Bitmap_Printer. 9-22-2016
+ Add keyPressEvent(). 9-23-2016
  */
 class Bitmap_Printer : public QWidget{
     Q_OBJECT
@@ -30,6 +31,7 @@ public:
   void drawAt(QPainter& painter,int x, int y,int color);//Draw a particular grid using given painter.
   void drawMap(int** bit_map,int col,int row);//Reload the background image, draw the visual gameboard with given bit_map.
   void set_image(char* fN);
+  void keyPressEvent(QKeyEvent *event);
 private:
   QImage background;
   QLabel label;
