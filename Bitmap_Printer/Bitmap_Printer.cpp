@@ -16,6 +16,7 @@ using namespace std;
  * This line is for GitHub try out. 9-23-2016
  * Add keyPressEvent. 9-23-2016
  * Remove grid line for 0 entries. 9-23-2016
+ * Testing github. 9-23-2016
  */
 int min(int x,int y){
   if(x<=y)
