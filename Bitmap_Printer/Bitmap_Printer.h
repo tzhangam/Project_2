@@ -4,7 +4,6 @@
 #define IMAGE_FILE "background.bmp"
 #define COL_NUMBER 10
 #define ROW_NUMBER 20
- enum COLOR_SUBSCRIPT{GREEN=1,YELLOW,RED,CYAN,PURPLE,BLUE,SILVER};
 /*
  Edit history:
  The class is created for converting a integer map into a visual colourful grid map. 9-21-2016
@@ -15,8 +14,7 @@
  Modify parameter list of constructor. Add member fileName. 9-22-2016
  Add set function for background image. 9-22-2016
  Declared COLOR enum to be global. 9-22-2016
- Change class name to be Bitmap_Printer. 9-22-2016
- Add keyPressEvent(). 9-23-2016
+ Change class name to be Bitmap_Printer
  */
 class Bitmap_Printer : public QWidget{
     Q_OBJECT
@@ -31,7 +29,6 @@ public:
   void drawAt(QPainter& painter,int x, int y,int color);//Draw a particular grid using given painter.
   void drawMap(int** bit_map,int col,int row);//Reload the background image, draw the visual gameboard with given bit_map.
   void set_image(char* fN);
-  void keyPressEvent(QKeyEvent *event);
 private:
   QImage background;
   QLabel label;
@@ -42,6 +39,6 @@ private:
   int row_number;//Total number of rows.
   int grid_length;//Length of one side of the grid.
   const Qt::GlobalColor colorIs[8]={Qt::transparent,Qt::green,Qt::yellow,Qt::red,Qt::cyan,Qt::magenta,Qt::blue,Qt::lightGray};
- 
+  enum COLOR_SUBSCRIPT{GREEN=1,YELLOW,RED,CYAN,PURPLE,BLUE,SILVER};
 };
 #endif
