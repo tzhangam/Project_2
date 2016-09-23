@@ -13,9 +13,6 @@ using namespace std;
  * Implement set_image. 9-22-2016
  * Pure bit_map visualizor is tested. 9-22-2016
  * Change class name. 9-22-2016
- * This line is for GitHub try out. 9-23-2016
- * Add keyPressEvent. 9-23-2016
- * Remove grid line for 0 entries. 9-23-2016
  */
 int min(int x,int y){
   if(x<=y)
@@ -30,6 +27,20 @@ Bitmap_Printer::Bitmap_Printer(char* fN,int col,int row){
   set_image(fileName);
   set_grid(col,row);
   
+  #if 0
+  //The following code is for debug.
+   int** temp;
+ temp=new int*[col_number];
+  for (size_t i=0;i<col_number;i++){
+    temp[i]=new int[row_number];
+    for(size_t j=0;j<row_number;j++){
+      temp[i][j]=(i+j)/7;}
+    
+  }
+  
+   drawMap(temp,col_number,row_number);
+  delete[] temp;
+#endif
 
   label.setPixmap(QPixmap::fromImage(background));
   label.show();
@@ -63,11 +74,11 @@ void Bitmap_Printer::set_bitmap(int** b_map){
 }
 */
 void Bitmap_Printer::drawAt(QPainter& painter,int x,int y,int color){
- if(color>0){ 
+  
   painter.setPen(Qt::black);
   painter.setBrush(colorIs[color]); 
   painter.drawRect(x*grid_length,y*grid_length,grid_length,grid_length);
-}
+
 }
 void Bitmap_Printer::drawMap(int** bit_map,int col, int row){
    //Reset drawing configuration.
@@ -92,25 +103,6 @@ void Bitmap_Printer::set_grid(int col,int row){
 }
 void Bitmap_Printer::set_image(char* fN){
     background.load(fN);
-}
-void Bitmap_Printer::keyPressEvent(QKeyEvent* event){
-  if(event->key()==Qt::Key_Enter){
-    
-  #if 1
-  //The following code is for debug.
-   int** temp;
- temp=new int*[col_number];
-  for (size_t i=0;i<col_number;i++){
-    temp[i]=new int[row_number];
-    for(size_t j=0;j<row_number;j++){
-      temp[i][j]=(i+j)/7;
-      }
-  
-   drawMap(temp,col_number,row_number);
-  delete[] temp;
-#endif                  
-     }
-   }
 }
 Bitmap_Printer::~Bitmap_Printer(){
   
