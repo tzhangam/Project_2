@@ -40,11 +40,20 @@ Window::Window() {
 
 	// layout
 	QGridLayout *mainLayout = new QGridLayout;
-	// mainLayout->setColumn
+	mainLayout->addWidget(renderArea, 0, 0, 1, 4);
+	mainLayout->addWidget(blockShapeLabel, 2, 0, Qt::AlignRight);
+	mainLayout->addWidget(blockShapeComboBox, 2, 1);
+	mainLayout->addWidget(blockColorLabel, 2, 2, Qt::AlignRight);
+	mainLayout->addWidget(blockColorComboBox, 2, 3);
+	setLayout(mainLayout);
+
+	setWindowTitle(tr("block test\n"));
 }
 
 void Window::shapeChanged() {
-
+	Block::BlockShape shape = Block::BlockShape(blockShapeComboBox->itemData(
+		blockShapeComboBox->currentIndex(), IdRole).toInt());
+	renderArea->setBlockShape(shape);
 }
 
 void Window::colorChanged() {

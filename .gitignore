@@ -1,3 +1,11 @@
+moc_*
+main.o
+Makefile
+.qmake.stash
+.DS_Store
+tetris.app/
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
