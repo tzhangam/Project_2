@@ -31,6 +31,16 @@ void RenderArea::setBlockDirection(Block::BlockDirection direction) {
 	update();
 }
 
+void RenderArea::rotateBlockClockwise() {
+	this->block.rotateClockwise();
+	update();
+}
+
+void RenderArea::rotateBlockCounterClockwise() {
+	this->block.rotateCounterClockwise();
+	update();
+}
+
 void RenderArea::paintEvent(QPaintEvent * /* event */) {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);

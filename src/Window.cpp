@@ -61,6 +61,10 @@ Window::Window() {
 	mainLayout->addWidget(blockDirectionComboBox, 3, 1);
 	setLayout(mainLayout);
 
+	// set keyboard focus policy
+	setFocusPolicy(Qt::ClickFocus);
+	setFocus();
+
 	setWindowTitle(tr("block test\n"));
 }
 
@@ -80,4 +84,12 @@ void Window::directionChanged() {
 	Block::BlockDirection direction = Block::BlockDirection(blockDirectionComboBox->itemData(
 		blockDirectionComboBox->currentIndex(), IdRole).toInt());
 	renderArea->setBlockDirection(direction);
+}
+
+void Window::keyPressEvent(QKeyEvent *event) {
+	switch (event->key()) {
+		case Qt::Key_Z: renderArea->rotateBlockClockwise(); break;
+		case Qt::Key_X: renderArea->rotateBlockCounterClockwise(); break;
+		default: ;
+	}
 }

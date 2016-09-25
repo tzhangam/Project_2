@@ -93,6 +93,26 @@ void Block::setColor(BlockColor color) {
 	updateMap();
 }
 
+void Block::rotateClockwise() {
+	switch (direction) {
+		case kUp: setDirection(kRight); break;
+		case kRight: setDirection(kDown); break;
+		case kDown: setDirection(kLeft); break;
+		case kLeft: setDirection(kUp); break;
+		default: ;
+	}
+}
+
+void Block::rotateCounterClockwise() {
+	switch (direction) {
+		case kUp: setDirection(kLeft); break;
+		case kRight: setDirection(kUp); break;
+		case kDown: setDirection(kRight); break;
+		case kLeft: setDirection(kDown); break;
+		default: ;
+	}
+}
+
 bool Block::getMap(int x, int y) const {
 	x = std::max(0, x);
 	y = std::max(0, y);

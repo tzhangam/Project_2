@@ -68,6 +68,9 @@ public:
 	void setDirection(BlockDirection direction);
 	void setColor(BlockColor color);
 
+	void rotateClockwise();
+	void rotateCounterClockwise();
+
 	bool getMap(int x, int y) const;
 
 private:

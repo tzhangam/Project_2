@@ -15,7 +15,10 @@ private slots:
 	void colorChanged();
 	void directionChanged();
 
-public:
+protected:
+	void keyPressEvent(QKeyEvent *event) override;
+
+private:
 	static const int IdRole = Qt::UserRole;
 	
 	RenderArea *renderArea;
