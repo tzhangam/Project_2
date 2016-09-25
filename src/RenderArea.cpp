@@ -21,6 +21,11 @@ void RenderArea::setBlockShape(Block::BlockShape shape) {
 	update();
 }
 
+void RenderArea::setBlockColor(Block::BlockColor color) {
+	this->block.setColor(color);
+	update();
+}
+
 void RenderArea::paintEvent(QPaintEvent *) {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
@@ -29,11 +34,14 @@ void RenderArea::paintEvent(QPaintEvent *) {
 		for (int j = 0; j < Block::BLOCK_RANGE; ++j) {
 			QRect rect(j*25+50, i*25+50, 25, 25);
 
-			if (block.getMap(i, j))
-				painter.setPen(QPen(block.getColor()));
-			else
+			if (block.getMap(i, j)) {
+				painter.setPen(QPen(Qt::black));
+				painter.setBrush(QBrush(block.getColor()));
+			}
+			else {
 				painter.setPen(QPen(Qt::white));
-
+				painter.setBrush(QBrush(Qt::white));
+			}
 			painter.drawRect(rect);
 		}
 }

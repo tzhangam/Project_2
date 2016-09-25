@@ -57,5 +57,7 @@ void Window::shapeChanged() {
 }
 
 void Window::colorChanged() {
-	
+	Block::BlockColor color = Block::BlockColor(blockColorComboBox->itemData(
+		blockColorComboBox->currentIndex(), IdRole).toInt());
+	renderArea->setBlockColor(color);
 }

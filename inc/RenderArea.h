@@ -17,6 +17,7 @@ public:
 
 public slots:
 	void setBlockShape(Block::BlockShape shape);
+	void setBlockColor(Block::BlockColor color);
 
 protected:
 	void paintEvent(QPaintEvent *event) override;
