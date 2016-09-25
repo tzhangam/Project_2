@@ -43,7 +43,7 @@ public:
 	};
 
 	static const int BLOCK_RANGE = 5;
-	static const int BLOCK_HALF_RANGE = (BLOCK_RANGE-1)/2;
+	static const int BLOCK_HALF_RANGE = (BLOCK_RANGE+1)/2;
 	typedef bool BlockMap[BLOCK_RANGE][BLOCK_RANGE];
 
 	explicit Block(BlockShape shape,

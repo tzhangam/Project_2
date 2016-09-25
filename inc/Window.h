@@ -13,13 +13,14 @@ public:
 private slots:
 	void shapeChanged();
 	void colorChanged();
+	void directionChanged();
 
 public:
 	static const int IdRole = Qt::UserRole;
 	
 	RenderArea *renderArea;
-	QLabel *blockShapeLabel, *blockColorLabel;
-	QComboBox *blockShapeComboBox, *blockColorComboBox;
+	QLabel *blockShapeLabel, *blockColorLabel, *blockDirectionLabel;
+	QComboBox *blockShapeComboBox, *blockColorComboBox, *blockDirectionComboBox;
 };
 
 #endif // WINDOW_H

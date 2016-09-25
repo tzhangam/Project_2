@@ -46,13 +46,34 @@ void Block::updateMap() {
 			// do nothing
 			break;
 		case kRight:
-
+			for (int i = 0; i < BLOCK_HALF_RANGE-1; ++i)
+				for (int j = 0; j < BLOCK_HALF_RANGE; ++j) {
+					bool tmp = map[i][j];
+					map[i][j] = map[BLOCK_RANGE-1-j][i];
+					map[BLOCK_RANGE-1-j][i] = map[BLOCK_RANGE-1-i][BLOCK_RANGE-1-j];
+					map[BLOCK_RANGE-1-i][BLOCK_RANGE-1-j] = map[j][BLOCK_RANGE-1-i];
+					map[j][BLOCK_RANGE-1-i] = tmp;
+				}
 			break;
 		case kDown:
-
+			for (int i = 0; i < BLOCK_HALF_RANGE; ++i)
+				for (int j = 0; j < BLOCK_RANGE; ++j) {
+					if (i != BLOCK_HALF_RANGE-1 || j < BLOCK_HALF_RANGE) {
+						bool tmp = map[i][j];
+						map[i][j] = map[BLOCK_RANGE-1-i][BLOCK_RANGE-1-j];
+						map[BLOCK_RANGE-1-i][BLOCK_RANGE-1-j] = tmp;
+					}
+				}
 			break;
 		case kLeft:
-
+			for (int i = 0; i < BLOCK_HALF_RANGE-1; ++i)
+				for (int j = 0; j < BLOCK_HALF_RANGE; ++j) {
+					bool tmp = map[i][j];
+					map[i][j] = map[j][BLOCK_RANGE-1-i];
+					map[j][BLOCK_RANGE-1-i] = map[BLOCK_RANGE-1-i][BLOCK_RANGE-1-j];
+					map[BLOCK_RANGE-1-i][BLOCK_RANGE-1-j] = map[BLOCK_RANGE-1-j][i];
+					map[BLOCK_RANGE-1-j][i] = tmp;
+				}
 			break;
 	}
 }

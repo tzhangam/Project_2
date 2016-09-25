@@ -32,11 +32,23 @@ Window::Window() {
 	blockColorLabel = new QLabel(tr("Block &Color"));
 	blockColorLabel->setBuddy(blockColorComboBox);
 
+	// block direction
+	blockDirectionComboBox = new QComboBox;
+	blockDirectionComboBox->addItem(tr("Up"), Block::BlockDirection::kUp);
+	blockDirectionComboBox->addItem(tr("Right"), Block::BlockDirection::kRight);
+	blockDirectionComboBox->addItem(tr("Down"), Block::BlockDirection::kDown);
+	blockDirectionComboBox->addItem(tr("Left"), Block::BlockDirection::kLeft);
+
+	blockDirectionLabel = new QLabel(tr("Block &Direction"));
+	blockDirectionLabel->setBuddy(blockDirectionComboBox);
+
 	// connect
 	connect(blockShapeComboBox, SIGNAL(activated(int)),
 		this, SLOT(shapeChanged()));
 	connect(blockColorComboBox, SIGNAL(activated(int)),
 		this, SLOT(colorChanged()));
+	connect(blockDirectionComboBox, SIGNAL(activated(int)),
+		this, SLOT(directionChanged()));
 
 	// layout
 	QGridLayout *mainLayout = new QGridLayout;
@@ -45,6 +57,8 @@ Window::Window() {
 	mainLayout->addWidget(blockShapeComboBox, 2, 1);
 	mainLayout->addWidget(blockColorLabel, 2, 2, Qt::AlignRight);
 	mainLayout->addWidget(blockColorComboBox, 2, 3);
+	mainLayout->addWidget(blockDirectionLabel, 3, 0, Qt::AlignRight);
+	mainLayout->addWidget(blockDirectionComboBox, 3, 1);
 	setLayout(mainLayout);
 
 	setWindowTitle(tr("block test\n"));
@@ -60,4 +74,10 @@ void Window::colorChanged() {
 	Block::BlockColor color = Block::BlockColor(blockColorComboBox->itemData(
 		blockColorComboBox->currentIndex(), IdRole).toInt());
 	renderArea->setBlockColor(color);
+}
+
+void Window::directionChanged() {
+	Block::BlockDirection direction = Block::BlockDirection(blockDirectionComboBox->itemData(
+		blockDirectionComboBox->currentIndex(), IdRole).toInt());
+	renderArea->setBlockDirection(direction);
 }

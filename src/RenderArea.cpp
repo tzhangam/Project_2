@@ -26,7 +26,12 @@ void RenderArea::setBlockColor(Block::BlockColor color) {
 	update();
 }
 
-void RenderArea::paintEvent(QPaintEvent *) {
+void RenderArea::setBlockDirection(Block::BlockDirection direction) {
+	this->block.setDirection(direction);
+	update();
+}
+
+void RenderArea::paintEvent(QPaintEvent * /* event */) {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
 
