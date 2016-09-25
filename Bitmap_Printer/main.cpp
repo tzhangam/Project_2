@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char* argv[]){
   QApplication app(argc, argv);
   Bitmap_Printer gameboard;
-
+  gameboard.show();
  
 
   return app.exec();

@@ -15,24 +15,28 @@
  Add set function for background image. 9-22-2016
  Declared COLOR enum to be global. 9-22-2016
  Change class name to be Bitmap_Printer
+ Swap row and col. 9-25-2016
+ Override keyPressEvent(), mainly for debug and test use. 9-25-2016
+ Add layout. 9-25-2016
  */
 class Bitmap_Printer : public QWidget{
     Q_OBJECT
 public:
-  Bitmap_Printer(char* fN=IMAGE_FILE,int col=COL_NUMBER,int row=ROW_NUMBER);
+  Bitmap_Printer(char* fN=IMAGE_FILE,int row=ROW_NUMBER,int col=COL_NUMBER);
   ~Bitmap_Printer();
   
  
  // void init_bitmap();//Allocate default memory to bit_map, initialize all entries to 0.
   //void set_bitmap(int** b_map);//Set current bit_map with b_map. This version does not accept b_map with non-standard size.
-  void set_grid(int col,int row);//Set col_number,row_number,grid_length.
+  void set_grid(int row,int col);//Set col_number,row_number,grid_length.
   void drawAt(QPainter& painter,int x, int y,int color);//Draw a particular grid using given painter.
-  void drawMap(int** bit_map,int col,int row);//Reload the background image, draw the visual gameboard with given bit_map.
+  void drawMap(int** bit_map,int row,int col);//Reload the background image, draw the visual gameboard with given bit_map.
   void set_image(char* fN);
+  void keyPressEvent(QKeyEvent* event);//Debug and test use.
 private:
   QImage background;
   QLabel label;
-
+  QVBoxLayout layout;
   char fileName[256];
   //int** bit_map;
   int col_number;//Total number of columns.
