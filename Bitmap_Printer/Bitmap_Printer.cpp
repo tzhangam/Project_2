@@ -13,6 +13,9 @@ using namespace std;
  * Implement set_image. 9-22-2016
  * Pure bit_map visualizor is tested. 9-22-2016
  * Change class name. 9-22-2016
+ * Swap row and col. 9-25-2016
+ * Add key event. 9-25-2016 
+ * Set up layout in constructor. 9-25-2016
  */
 int min(int x,int y){
   if(x<=y)
@@ -20,30 +23,19 @@ int min(int x,int y){
   else
     return y;
 }
-Bitmap_Printer::Bitmap_Printer(char* fN,int col,int row){ 
+Bitmap_Printer::Bitmap_Printer(char* fN,int row,int col):QWidget(0){ 
   //Set up image and grids.
   bzero(fileName,256);
   strcpy(fileName,fN);
   set_image(fileName);
-  set_grid(col,row);
-  
-  #if 0
-  //The following code is for debug.
-   int** temp;
- temp=new int*[col_number];
-  for (size_t i=0;i<col_number;i++){
-    temp[i]=new int[row_number];
-    for(size_t j=0;j<row_number;j++){
-      temp[i][j]=(i+j)/7;}
-    
-  }
-  
-   drawMap(temp,col_number,row_number);
-  delete[] temp;
-#endif
+  set_grid(row,col);
+ 
+ label.setPixmap(QPixmap::fromImage(background));
+ 
+  //Set up layout.
+  layout.addWidget(&label);
+  setLayout(&layout);
 
-  label.setPixmap(QPixmap::fromImage(background));
-  label.show();
 
 }
 
@@ -74,27 +66,31 @@ void Bitmap_Printer::set_bitmap(int** b_map){
 }
 */
 void Bitmap_Printer::drawAt(QPainter& painter,int x,int y,int color){
-  
+  if(color>0){
   painter.setPen(Qt::black);
   painter.setBrush(colorIs[color]); 
   painter.drawRect(x*grid_length,y*grid_length,grid_length,grid_length);
-
+ }
 }
-void Bitmap_Printer::drawMap(int** bit_map,int col, int row){
+void Bitmap_Printer::drawMap(int** bit_map,int row,int col){
    //Reset drawing configuration.
   set_image(fileName);
-  set_grid(col,row);
+  set_grid(row,col);
   QPainter painter(&background);
   
   //Draw the bit_map.
-  for(int i=0;i<col;i++){
-    for(int j=0;j<row;j++){
-      drawAt(painter,i,j,bit_map[i][j]);
+  for(int i=0;i<row;i++){
+    for(int j=0;j<col;j++){
+      drawAt(painter,j,i,bit_map[i][j]);
     }
   }
   
+  //Resetting Pixmap is necessary for normally displaying the new drawn picture.  
+  label.setPixmap(QPixmap::fromImage(background));
+ 
+  
 }
-void Bitmap_Printer::set_grid(int col,int row){
+void Bitmap_Printer::set_grid(int row,int col){
   
   col_number=col;
   row_number=row;
@@ -103,6 +99,31 @@ void Bitmap_Printer::set_grid(int col,int row){
 }
 void Bitmap_Printer::set_image(char* fN){
     background.load(fN);
+}
+void Bitmap_Printer::keyPressEvent(QKeyEvent* event){
+
+  if(event->key()==Qt::Key_Left){
+     
+     #if 0
+  //The following code is for debug.
+   int** temp;
+ temp=new int*[row_number];
+  for (size_t i=0;i<row_number;i++){
+    temp[i]=new int[col_number];
+    for(size_t j=0;j<col_number;j++){
+      temp[i][j]=(i+j)/7;}
+    
+  }
+  
+   drawMap(temp,row_number,col_number);
+  for(int i=0;i<row_number;i++)
+    delete[] temp[i];
+  delete[] temp;
+  
+#endif
+
+ 
+  }
 }
 Bitmap_Printer::~Bitmap_Printer(){
   
