@@ -2,7 +2,7 @@
 
 RenderArea::RenderArea(QWidget *parent)
 	: QWidget(parent),
-	  block(Block::BlockShape::kShapeI)
+	  block(Block::BlockShape::kShapeI, Block::BlockDirection::kUp, Block::BlockColor::kRed)
 {
 	setBackgroundRole(QPalette::Base);
 	setAutoFillBackground(true);
@@ -27,7 +27,7 @@ void RenderArea::paintEvent(QPaintEvent *) {
 
 	for (int i = 0; i < Block::BLOCK_RANGE; ++i)
 		for (int j = 0; j < Block::BLOCK_RANGE; ++j) {
-			QRect rect(i*50+100, j*50+100, 50, 50);
+			QRect rect(j*25+50, i*25+50, 25, 25);
 
 			if (block.getMap(i, j))
 				painter.setPen(QPen(block.getColor()));

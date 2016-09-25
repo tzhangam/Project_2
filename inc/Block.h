@@ -33,13 +33,13 @@ public:
 	};
 
 	enum BlockColor {
-		kRed	= Qt::red,
-		kYellow	= Qt::yellow,
-		kGreen	= Qt::green,
-		kBlue	= Qt::blue,
-		kCyan	= Qt::cyan,
-		kPink	= Qt::magenta,
-		kBlack	= Qt::black
+		kRed,
+		kYellow,
+		kGreen,
+		kBlue,
+		kCyan,
+		kPink,
+		kBlack
 	};
 
 	static const int BLOCK_RANGE = 5;
@@ -51,7 +51,18 @@ public:
 
 	BlockShape getShape() const { return shape; };
 	BlockDirection getDirection() const { return direction; };
-	BlockColor getColor() const { return color; };
+	Qt::GlobalColor getColor() const {
+		switch (color) {
+			case kRed: return Qt::red;
+			case kYellow: return Qt::yellow;
+			case kGreen: return Qt::green;
+			case kBlue: return Qt::blue;
+			case kCyan: return Qt::cyan;
+			case kPink: return Qt::magenta;
+			case kBlack: return Qt::black;
+			default: return Qt::red;
+		}
+	};
 
 	void setShape(BlockShape shape);
 	void setDirection(BlockDirection direction);
