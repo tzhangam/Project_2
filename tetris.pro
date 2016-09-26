@@ -2,7 +2,8 @@ TEMPLATE = app
 TARGET = tetris
 
 QT += widgets core
-CONFIG += console
+CONFIG += c++11
+QMAKE_CXXFLAGS += -std=c++11
 INCLUDEPATH += ./inc/
 SOURCES += src/main.cpp \
            src/Block.cpp \
