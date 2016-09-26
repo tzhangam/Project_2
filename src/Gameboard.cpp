@@ -20,6 +20,9 @@ Gameboard::Gameboard(int height, int width)
 	: activeBlock(nullptr),
 	  gridSize(20)
 {	
+	// seed for random generator
+	std::srand(std::time(0));
+	
 	this->width = tetris::clamp(minWidth, width, maxWidth);
 	this->height = tetris::clamp(minHeight, height, maxHeight);
 
@@ -32,9 +35,6 @@ Gameboard::Gameboard(int height, int width)
 		}
 	if (validateMove(*activeBlock))
 		updateGrid();
-
-	// seed for random generator
-	std::srand(std::time(0));
 }
 
 void Gameboard::moveBlock(Block::BlockMotion motion) {
