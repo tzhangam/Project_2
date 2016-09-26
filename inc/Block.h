@@ -4,13 +4,6 @@
 #include <QColor>
 #include <QObject>
 
-#define DEBUG 1
-#define LOG(msg) do { if (DEBUG) { QMessageBox *_msg = new QMessageBox; \
-						_msg->setText(QObject::tr(msg)); _msg->show(); } } while(0)
-#if (DEBUG)
-#include <QtWidgets>
-#endif // DEBUG
-
 class Block : public QObject {
 	Q_OBJECT
 

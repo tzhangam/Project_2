@@ -1,7 +1,13 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QtWidgets>
+#include <qtguiversion>
+#if QT_VERSION >= 0x050000
+  #include <QtWidgets>
+#else
+  #include <QtGui>
+#endif // QT_VERSION
+
 #include "RenderArea.h"
 
 class Window : public QWidget {

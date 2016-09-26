@@ -1,5 +1,3 @@
-#include <QtWidgets>
-
 #include "window.h"
 
 Window::Window() {
