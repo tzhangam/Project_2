@@ -18,7 +18,7 @@ QSize RenderArea::minimumSizeHint() const {
 }
 
 QSize RenderArea::sizeHint() const {
-	return QSize(400, 400);
+	return QSize(200, 400);
 }
 
 void RenderArea::moveBlock(Block::BlockMotion motion) {

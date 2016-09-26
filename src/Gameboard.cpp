@@ -19,7 +19,10 @@ const int Gameboard::minGridSize     = 10;
 Gameboard::Gameboard(int height, int width, int gridSize) 
 	: activeBlock(nullptr),
 	  timer(nullptr),
-	  isGameStart(false)
+	  isGameStart(false),
+	  combo(0),
+	  score(0),
+	  level(1)
 {	
 	// seed for random generator
 	std::srand(std::time(0));
@@ -48,8 +51,18 @@ void Gameboard::moveBlock(Block::BlockMotion motion) {
 
 		// row elimination
 		int row;
-		while ((row = getFullRow()) != kNoFullRow)
+		combo = 0;
+		while ((row = getFullRow()) != kNoFullRow) {
+			++combo;
 			eliminateRow(row);
+		}
+		score += 10 * combo * combo;
+		emit sendScore();
+		if (score > level * 100 && level < 10) {
+			++level;
+			timer->stop();
+			timer->start(1000-100*(level-1));
+		}
 
 		if (!generateNewBlock()) {
 			reset();
@@ -229,6 +242,9 @@ void Gameboard::start() {
 	
 	if (validateMove(*activeBlock))
 		updateGrid();
+
+	combo = score = 0;
+	level = 1;
 
 	timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(blockDescend()));

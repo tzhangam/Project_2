@@ -19,6 +19,8 @@ public:
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
 
+	const Gameboard *get() const {return &gameboard; }
+
 public slots:
 	void moveBlock(Block::BlockMotion motion);
 	void startGame();

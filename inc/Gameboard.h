@@ -22,6 +22,10 @@ public:
 	int getHeight() const { return height; }
 	int getGridSize() const { return gridSize; }
 
+	int getCombo() const { return combo; }
+	int getScore() const { return score; }
+	int getLevel() const { return level; }
+
 public slots:
 	void moveBlock(Block::BlockMotion motion);
 	void startGame();
@@ -31,6 +35,9 @@ private slots:
 
 signals:
 	void blockMoved();
+	void sendCombo();
+	void sendScore();
+	void sendLevel();
 
 private:
 	typedef struct {
@@ -62,6 +69,9 @@ private:
 
 	QTimer *timer;
 	volatile bool isGameStart;
+	int combo;
+	int score;
+	int level;
 
 	bool validateMove(const Block &candidate) const;
 	void updateGrid();

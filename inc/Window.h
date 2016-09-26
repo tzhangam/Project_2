@@ -14,6 +14,11 @@ class Window : public QWidget {
 public:
 	Window();
 
+	const Gameboard *gameboard;
+
+public slots:
+	void updatePanel();
+
 protected:
 	void keyPressEvent(QKeyEvent *event) override;
 
@@ -21,6 +26,8 @@ private:
 	static const int IdRole = Qt::UserRole;
 	
 	RenderArea *renderArea;
+	
+	QLabel *scoreLabel, *comboLabel, *levelLabel;
 };	
 
 #endif // WINDOW_H
