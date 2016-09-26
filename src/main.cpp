@@ -1,5 +1,10 @@
-// #include "Bitmap_Printer.h"
-#include <QtWidgets>
+#include <qtguiversion>
+#if QT_VERSION >= 0x050000
+  #include <QtWidgets>
+#else
+  #include <QtGui>
+#endif // QT_VERSION
+
 #include <iostream>
 #include "Window.h"
 
