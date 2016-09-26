@@ -50,6 +50,15 @@ public:
 		kNoBlock
 	};
 
+	enum BlockMotion {
+		kRotateClockwise,
+		kRotateCounterClockwise,
+		kTranslateLeft,
+		kTranslateRight,
+		kTranslateDown,
+		kTranslateUp
+	};
+
 	static const int BLOCK_RANGE = 5;
 	static const int BLOCK_HALF_RANGE = (BLOCK_RANGE+1)/2;
 	typedef bool BlockMap[BLOCK_RANGE][BLOCK_RANGE];
@@ -76,12 +85,7 @@ public:
 	void setColor(BlockColor color);
 	void setColor(Qt::GlobalColor color);
 
-	void rotateClockwise();
-	void rotateCounterClockwise();
-	void translateLeft();
-	void translateRight();
-	void translateDown();
-	void translateUp();
+	void move(BlockMotion motion);
 
 	/*
 	   coordinate system for map:

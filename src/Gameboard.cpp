@@ -14,10 +14,11 @@ Gameboard::Gameboard(int height, int width)
 	: activeBlock(nullptr),
 	  gridSize(20)
 {	
-	activeBlock = new Block(Block::BlockShape::kShapeZ, 10, 5);
 	this->width = tetris::clamp(minWidth, width, maxWidth);
 	this->height = tetris::clamp(minHeight, height, maxHeight);
 
+	activeBlock = new Block(getRandomShape(), 2, width/2,
+							getRandomDirection(), getRandomColor());
 	for (int i = 0; i < maxHeight; ++i)
 		for (int j = 0; j < maxWidth; ++j) {
 			grid[i][j].color = Block::BlockColor::kNoBlock;
@@ -30,80 +31,19 @@ Gameboard::Gameboard(int height, int width)
 	std::srand(std::time(0));
 }
 
-void Gameboard::rotateClockwise() {
+void Gameboard::moveBlock(Block::BlockMotion motion) {
 	if (activeBlock == nullptr) return;
 
-	Block newBlock = Block(*activeBlock);
-	newBlock.rotateClockwise();
+	Block newBlock(*activeBlock);
+	newBlock.move(motion);
 
 	if (validateMove(newBlock)) {
-		activeBlock->rotateClockwise();
+		activeBlock->move(motion);
 		updateGrid();
 	}
-}
-
-void Gameboard::rotateCounterClockwise() {
-	if (activeBlock == nullptr) return;
-
-	Block newBlock = Block(*activeBlock);
-	newBlock.rotateCounterClockwise();
-
-	if (validateMove(newBlock)) {
-		activeBlock->rotateCounterClockwise();
-		updateGrid();
-	}
-}
-
-void Gameboard::translateLeft() {
-	if (activeBlock == nullptr) return;
-
-	Block newBlock = Block(*activeBlock);
-	newBlock.translateLeft();
-
-	if (validateMove(newBlock)) {
-		activeBlock->translateLeft();
-		updateGrid();
-	}
-}
-
-void Gameboard::translateRight() {
-	if (activeBlock == nullptr) return;
-
-	Block newBlock = Block(*activeBlock);
-	newBlock.translateRight();
-
-	if (validateMove(newBlock)) {
-		activeBlock->translateRight();
-		updateGrid();
-	}
-}
-
-void Gameboard::translateDown() {
-	if (activeBlock == nullptr) return;
-
-	Block newBlock = Block(*activeBlock);
-	newBlock.translateDown();
-
-	if (validateMove(newBlock)) {
-		activeBlock->translateDown();
-		updateGrid();
-	}
-	else {
-		if (checkBlockStatus() == kDead) {
-			generateNewBlock();
-		}
-	}
-}
-
-void Gameboard::translateUp() {
-	if (activeBlock == nullptr) return;
-
-	Block newBlock = Block(*activeBlock);
-	newBlock.translateUp();
-
-	if (validateMove(newBlock)) {
-		activeBlock->translateUp();
-		updateGrid();
+	else if (motion == Block::BlockMotion::kTranslateDown
+		&& checkBlockStatus() == kDead) {
+		generateNewBlock();
 	}
 }
 
@@ -176,7 +116,7 @@ Gameboard::BlockStatus Gameboard::checkBlockStatus() const {
 bool Gameboard::generateNewBlock() {
 	suppressActiveBlock();
 
-	Block *newBlock = new Block(getRandomShape(), 2, 4,
+	Block *newBlock = new Block(getRandomShape(), 2, width/2,
 							getRandomDirection(), getRandomColor());
 	if (validateMove(*newBlock)) {
 		activeBlock = newBlock;

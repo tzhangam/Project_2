@@ -32,12 +32,7 @@ public:
 	int getGridSize() const { return gridSize; }
 
 public slots:
-	void rotateClockwise();
-	void rotateCounterClockwise();
-	void translateLeft();
-	void translateRight();
-	void translateDown();
-	void translateUp();
+	void moveBlock(Block::BlockMotion motion);
 
 private:
 	typedef struct {

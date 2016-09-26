@@ -115,40 +115,41 @@ void Block::setColor(Qt::GlobalColor color) {
 	setColor(convert(color));
 }
 
-void Block::rotateClockwise() {
-	switch (direction) {
-		case kUp: setDirection(kRight); break;
-		case kRight: setDirection(kDown); break;
-		case kDown: setDirection(kLeft); break;
-		case kLeft: setDirection(kUp); break;
-		default: ;
+void Block::move(BlockMotion motion) {
+	switch (motion) {
+		case kRotateClockwise:
+			switch (direction) {
+				case kUp:    setDirection(kRight); break;
+				case kRight: setDirection(kDown);  break;
+				case kDown:  setDirection(kLeft);  break;
+				case kLeft:  setDirection(kUp);    break;
+				default: ;
+			}
+			break;
+		case kRotateCounterClockwise:
+			switch (direction) {
+				case kUp:    setDirection(kLeft);  break;
+				case kRight: setDirection(kUp);    break;
+				case kDown:  setDirection(kRight); break;
+				case kLeft:  setDirection(kDown);  break;
+				default: ;
+			}
+			break;
+		case kTranslateLeft:
+			--centerY;
+			break;
+		case kTranslateRight:
+			++centerY;
+			break;
+		case kTranslateDown:
+			++centerX;
+			break;
+		case kTranslateUp:
+			--centerX;
+			break;
+		default:
+			;
 	}
-}
-
-void Block::rotateCounterClockwise() {
-	switch (direction) {
-		case kUp: setDirection(kLeft); break;
-		case kRight: setDirection(kUp); break;
-		case kDown: setDirection(kRight); break;
-		case kLeft: setDirection(kDown); break;
-		default: ;
-	}
-}
-
-void Block::translateLeft() {
-	--centerY;
-}
-
-void Block::translateRight() {
-	++centerY;
-}
-
-void Block::translateDown() {
-	++centerX;
-}
-
-void Block::translateUp() {
-	--centerX;
 }
 
 bool Block::getMap(int row, int col) const {

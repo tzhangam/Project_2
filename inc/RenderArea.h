@@ -17,12 +17,7 @@ public:
 	QSize sizeHint() const override;
 
 public slots:
-	void rotateBlockClockwise();
-	void rotateBlockCounterClockwise();
-	void translateBlockLeft();
-	void translateBlockRight();
-	void translateBlockDown();
-	void translateBlockUp();
+	void moveBlock(Block::BlockMotion motion);
 
 protected:
 	void paintEvent(QPaintEvent *event) override;

@@ -17,33 +17,8 @@ QSize RenderArea::sizeHint() const {
 	return QSize(400, 400);
 }
 
-void RenderArea::rotateBlockClockwise() {
-	this->gameboard.rotateClockwise();
-	update();
-}
-
-void RenderArea::rotateBlockCounterClockwise() {
-	this->gameboard.rotateCounterClockwise();
-	update();
-}
-
-void RenderArea::translateBlockLeft() {
-	this->gameboard.translateLeft();
-	update();
-}
-
-void RenderArea::translateBlockRight() {
-	this->gameboard.translateRight();
-	update();
-}
-
-void RenderArea::translateBlockDown() {
-	this->gameboard.translateDown();
-	update();
-}
-
-void RenderArea::translateBlockUp() {
-	this->gameboard.translateUp();
+void RenderArea::moveBlock(Block::BlockMotion motion) {
+	this->gameboard.moveBlock(motion);
 	update();
 }
 

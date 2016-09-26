@@ -20,12 +20,12 @@ Window::Window() {
 
 void Window::keyPressEvent(QKeyEvent *event) {
 	switch (event->key()) {
-		case Qt::Key_Z:     renderArea->rotateBlockClockwise();        break;
-		case Qt::Key_X:     renderArea->rotateBlockCounterClockwise(); break;
-		case Qt::Key_Left:  renderArea->translateBlockLeft();          break;
-		case Qt::Key_Right: renderArea->translateBlockRight();         break;
-		case Qt::Key_Down:  renderArea->translateBlockDown();          break;
-		case Qt::Key_Up:    renderArea->translateBlockUp();            break;
+		case Qt::Key_Z:     renderArea->moveBlock(Block::BlockMotion::kRotateClockwise);        break;
+		case Qt::Key_X:     renderArea->moveBlock(Block::BlockMotion::kRotateCounterClockwise); break;
+		case Qt::Key_Left:  renderArea->moveBlock(Block::BlockMotion::kTranslateLeft);          break;
+		case Qt::Key_Right: renderArea->moveBlock(Block::BlockMotion::kTranslateRight);         break;
+		case Qt::Key_Down:  renderArea->moveBlock(Block::BlockMotion::kTranslateDown);          break;
+		case Qt::Key_Up:    renderArea->moveBlock(Block::BlockMotion::kTranslateUp);            break;
 		default: ;
 	}
 }
