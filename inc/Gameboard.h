@@ -45,13 +45,26 @@ private:
 		bool isActive;
 	} Grid;
 
+	enum BlockStatus {
+		kActive,
+		kDead
+	};
+
 	Block *activeBlock;
 	Grid grid[maxHeight][maxWidth];
 
 	int width, height, gridSize;
 
-	bool validateMove(const Block &candidate);
+	bool validateMove(const Block &candidate) const;
 	void updateGrid();
+
+	BlockStatus checkBlockStatus() const;
+	bool generateNewBlock();
+	void suppressActiveBlock();
+
+	Block::BlockShape getRandomShape() const;
+	Block::BlockDirection getRandomDirection() const;
+	Block::BlockColor getRandomColor() const;
 
 	void resize(int width, int height);
 };

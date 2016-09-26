@@ -52,6 +52,8 @@ void Block::updateMap() {
 		case kShapeO:
 			map[2][1] = map[2][2] = map[3][1] = map[3][2] = true;
 			break;
+		default:
+			;
 	}
 
 	// handle different direction
@@ -89,6 +91,8 @@ void Block::updateMap() {
 					map[BLOCK_RANGE-1-j][i] = tmp;
 				}
 			break;
+		default:
+			;
 	}
 }
 

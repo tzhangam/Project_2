@@ -22,14 +22,18 @@ public:
 		kShapeT,
 		kShapeZ,
 		kShapeZ_Mir,
-		kShapeO
+		kShapeO,
+
+		kShapeCount
 	};
 
 	enum BlockDirection {
 		kUp,
 		kRight,
 		kDown,
-		kLeft
+		kLeft,
+
+		kDirectionCount
 	};
 
 	enum BlockColor {
@@ -40,6 +44,8 @@ public:
 		kCyan,
 		kPink,
 		kBlack,
+
+		kColorCount,
 
 		kNoBlock
 	};

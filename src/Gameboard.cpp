@@ -1,5 +1,8 @@
 #include "Gameboard.h"
 
+#include <cstdlib>
+#include <ctime>
+
 const int Gameboard::maxWidth;
 const int Gameboard::minWidth;
 const int Gameboard::maxHeight;
@@ -22,6 +25,9 @@ Gameboard::Gameboard(int height, int width)
 		}
 	if (validateMove(*activeBlock))
 		updateGrid();
+
+	// seed for random generator
+	std::srand(std::time(0));
 }
 
 void Gameboard::rotateClockwise() {
@@ -82,6 +88,11 @@ void Gameboard::translateDown() {
 		activeBlock->translateDown();
 		updateGrid();
 	}
+	else {
+		if (checkBlockStatus() == kDead) {
+			generateNewBlock();
+		}
+	}
 }
 
 void Gameboard::translateUp() {
@@ -96,7 +107,7 @@ void Gameboard::translateUp() {
 	}
 }
 
-bool Gameboard::validateMove(const Block &candidate) {
+bool Gameboard::validateMove(const Block &candidate) const {
 	int range = Block::BLOCK_HALF_RANGE;
 	for (int i = -range+1; i < range; ++i)
 		for (int j = -range+1; j < range; ++j)
@@ -127,6 +138,9 @@ void Gameboard::updateGrid() {
 				grid[i][j].color = Block::BlockColor::kNoBlock;
 			}
 
+	// check if there is active block
+	if (activeBlock == nullptr) return;
+
 	// fill in new active block
 	int range = Block::BLOCK_HALF_RANGE;
 	for (int i = -range+1; i < range; ++i)
@@ -138,6 +152,69 @@ void Gameboard::updateGrid() {
 				grid[row][col].isActive = true;
 				grid[row][col].color = Block::convert(activeBlock->getColor());
 			}
+}
+
+Gameboard::BlockStatus Gameboard::checkBlockStatus() const {
+	if (activeBlock == nullptr) return kDead;
+
+	int range = Block::BLOCK_HALF_RANGE;
+	for (int i = -range+1; i < range; ++i)
+		for (int j = -range+1; j < range; ++j) 
+			if (activeBlock->getMap(i+range-1, j+range-1)) {
+				int row = activeBlock->getX() + i;
+				int col = activeBlock->getY() + j;
+
+				// touch bottom or inactive grid
+				if (row+1 >= height ||
+					(!grid[row+1][col].isActive &&
+						grid[row+1][col].color != Block::BlockColor::kNoBlock))
+					return kDead;
+			}
+	return kActive;
+}
+
+bool Gameboard::generateNewBlock() {
+	suppressActiveBlock();
+
+	Block *newBlock = new Block(getRandomShape(), 2, 4,
+							getRandomDirection(), getRandomColor());
+	if (validateMove(*newBlock)) {
+		activeBlock = newBlock;
+		updateGrid();
+		return true;
+	}
+	else {
+		delete newBlock;
+		return false;
+	}
+}
+
+void Gameboard::suppressActiveBlock() {
+	if (activeBlock == nullptr) return;
+
+	int range = Block::BLOCK_HALF_RANGE;
+	for (int i = -range+1; i < range; ++i)
+		for (int j = -range+1; j < range; ++j) 
+			if (activeBlock->getMap(i+range-1, j+range-1)) {
+				int row = activeBlock->getX() + i;
+				int col = activeBlock->getY() + j;
+
+				grid[row][col].isActive = false;
+			}
+	delete activeBlock;
+	activeBlock = nullptr;
+}
+
+Block::BlockShape Gameboard::getRandomShape() const {
+	return Block::BlockShape(std::rand() % Block::BlockShape::kShapeCount);
+}
+
+Block::BlockDirection Gameboard::getRandomDirection() const {
+	return Block::BlockDirection(std::rand() % Block::BlockDirection::kDirectionCount);
+}
+
+Block::BlockColor Gameboard::getRandomColor() const {
+	return Block::BlockColor(std::rand() % Block::BlockColor::kColorCount);
 }
 
 void Gameboard::resize(int width, int height) {
