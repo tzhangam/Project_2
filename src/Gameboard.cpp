@@ -12,19 +12,17 @@ const int Gameboard::defaultHeight   = 20;
 const int Gameboard::maxHeight           ;
 const int Gameboard::minHeight       = 15;
 
-const int Gameboard::defaultGridSize = 25;
+const int Gameboard::defaultGridSize = 20;
 const int Gameboard::maxGridSize     = 50;
 const int Gameboard::minGridSize     = 10;
 
-Gameboard::Gameboard(int height, int width)
-	: activeBlock(nullptr),
-	  gridSize(20)
-{	
+Gameboard::Gameboard(int height, int width, int gridSize) {	
 	// seed for random generator
 	std::srand(std::time(0));
-	
+
 	this->width = tetris::clamp(minWidth, width, maxWidth);
 	this->height = tetris::clamp(minHeight, height, maxHeight);
+	this->gridSize = tetris::clamp(minGridSize, gridSize, maxGridSize);
 
 	activeBlock = new Block(getRandomShape(), 2, width/2,
 							getRandomDirection(), getRandomColor());
@@ -35,6 +33,10 @@ Gameboard::Gameboard(int height, int width)
 		}
 	if (validateMove(*activeBlock))
 		updateGrid();
+
+	timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), this, SLOT(blockDescend()));
+	timer->start(1000);
 }
 
 void Gameboard::moveBlock(Block::BlockMotion motion) {
@@ -59,6 +61,11 @@ void Gameboard::moveBlock(Block::BlockMotion motion) {
 
 		generateNewBlock();
 	}
+}
+
+void Gameboard::blockDescend() {
+	moveBlock(Block::BlockMotion::kTranslateDown);
+	emit blockMoved();
 }
 
 bool Gameboard::validateMove(const Block &candidate) const {

@@ -4,11 +4,14 @@
 #include "Block.h"
 #include "misc.h"
 
+#include <QTimer>
+
 class Gameboard : public QObject {
 	Q_OBJECT
 
 public:
-	Gameboard(int height = defaultHeight, int width = defaultWidth);
+	Gameboard(int height = defaultHeight,
+		int width = defaultWidth, int gridSize = defaultGridSize);
 
 	Qt::GlobalColor getGridColor(int row, int col) const {
 		row = tetris::clamp(0, row, height-1);
@@ -21,6 +24,12 @@ public:
 
 public slots:
 	void moveBlock(Block::BlockMotion motion);
+
+private slots:
+	void blockDescend();
+
+signals:
+	void blockMoved();
 
 private:
 	typedef struct {
@@ -49,6 +58,8 @@ private:
 	Grid grid[maxHeight][maxWidth];
 
 	int width, height, gridSize;
+
+	QTimer *timer;
 
 	bool validateMove(const Block &candidate) const;
 	void updateGrid();

@@ -6,6 +6,10 @@ RenderArea::RenderArea(QWidget *parent)
 {
 	setBackgroundRole(QPalette::Base);
 	setAutoFillBackground(true);
+
+	// update when block moved by gameboard
+	connect(&gameboard, SIGNAL(blockMoved()), this, SLOT(update()));
+
 	update();
 }
 

@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = tetris
 
-QT += widgets
+QT += widgets core
 CONFIG += console
 INCLUDEPATH += ./inc/
 SOURCES += src/main.cpp \
