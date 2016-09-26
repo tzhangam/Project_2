@@ -11,7 +11,8 @@ int main(int argc, char* argv[]){
   //QApplication app(argc, argv);
   Bitmap_Manip manip;
   manip.print_map();
-  cout<<manip.eliminate_full_row()<<"Rows to be eliminated. "<<endl;
+  cout<<manip.merge_full()<<"Rows to be eliminated. "<<endl;
+ // manip.down_shift_map(13,5);
   cout<<" "<<endl;
   manip.print_map();
 
