@@ -1,12 +1,26 @@
 #include "Block.h"
+#include "misc.h"
 
 #include <algorithm>
 
-Block::Block(BlockShape shape, BlockDirection direction, BlockColor color) {
-	this->shape = shape;
-	this->direction = direction;
-	this->color = color;
+Block::Block(BlockShape shape, int x, int y,
+	BlockDirection direction, BlockColor color)
+	: shape(shape),
+	  direction(direction),
+	  color(color),
+	  centerX(x),
+	  centerY(y)
+{
+	updateMap();
+}
 
+Block::Block(const Block &rhs)
+	: shape(rhs.getShape()),
+	  direction(rhs.getDirection()),
+	  centerX(rhs.getX()),
+	  centerY(rhs.getY())
+{
+	setColor(rhs.getColor());
 	updateMap();
 }
 
@@ -93,6 +107,10 @@ void Block::setColor(BlockColor color) {
 	updateMap();
 }
 
+void Block::setColor(Qt::GlobalColor color) {
+	setColor(convert(color));
+}
+
 void Block::rotateClockwise() {
 	switch (direction) {
 		case kUp: setDirection(kRight); break;
@@ -113,10 +131,24 @@ void Block::rotateCounterClockwise() {
 	}
 }
 
-bool Block::getMap(int x, int y) const {
-	x = std::max(0, x);
-	y = std::max(0, y);
-	x = std::min(x, BLOCK_RANGE-1);
-	y = std::min(y, BLOCK_RANGE-1);
-	return map[x][y];
+void Block::translateLeft() {
+	--centerY;
+}
+
+void Block::translateRight() {
+	++centerY;
+}
+
+void Block::translateDown() {
+	++centerX;
+}
+
+void Block::translateUp() {
+	--centerX;
+}
+
+bool Block::getMap(int row, int col) const {
+	row = tetris::clamp(0, row, BLOCK_RANGE-1);
+	col = tetris::clamp(0, col, BLOCK_RANGE-1);
+	return map[row][col];
 }

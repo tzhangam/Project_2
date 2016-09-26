@@ -5,6 +5,7 @@
 #include <QtWidgets>
 
 #include "Block.h"
+#include "Gameboard.h"
 
 class RenderArea : public QWidget {
 	Q_OBJECT
@@ -16,17 +17,18 @@ public:
 	QSize sizeHint() const override;
 
 public slots:
-	void setBlockShape(Block::BlockShape shape);
-	void setBlockColor(Block::BlockColor color);
-	void setBlockDirection(Block::BlockDirection direction);
 	void rotateBlockClockwise();
 	void rotateBlockCounterClockwise();
+	void translateBlockLeft();
+	void translateBlockRight();
+	void translateBlockDown();
+	void translateBlockUp();
 
 protected:
 	void paintEvent(QPaintEvent *event) override;
 
 private:
-	Block block;
+	Gameboard gameboard;
 };
 
 #endif // RENDERAREA_H

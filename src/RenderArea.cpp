@@ -2,42 +2,48 @@
 
 RenderArea::RenderArea(QWidget *parent)
 	: QWidget(parent),
-	  block(Block::BlockShape::kShapeI, Block::BlockDirection::kUp, Block::BlockColor::kRed)
+	  gameboard()
 {
 	setBackgroundRole(QPalette::Base);
 	setAutoFillBackground(true);
+	update();
 }
 
 QSize RenderArea::minimumSizeHint() const {
-	return QSize(100, 100);
+	return QSize(200, 200);
 }
 
 QSize RenderArea::sizeHint() const {
 	return QSize(400, 400);
 }
 
-void RenderArea::setBlockShape(Block::BlockShape shape) {
-	this->block.setShape(shape);
-	update();
-}
-
-void RenderArea::setBlockColor(Block::BlockColor color) {
-	this->block.setColor(color);
-	update();
-}
-
-void RenderArea::setBlockDirection(Block::BlockDirection direction) {
-	this->block.setDirection(direction);
-	update();
-}
-
 void RenderArea::rotateBlockClockwise() {
-	this->block.rotateClockwise();
+	this->gameboard.rotateClockwise();
 	update();
 }
 
 void RenderArea::rotateBlockCounterClockwise() {
-	this->block.rotateCounterClockwise();
+	this->gameboard.rotateCounterClockwise();
+	update();
+}
+
+void RenderArea::translateBlockLeft() {
+	this->gameboard.translateLeft();
+	update();
+}
+
+void RenderArea::translateBlockRight() {
+	this->gameboard.translateRight();
+	update();
+}
+
+void RenderArea::translateBlockDown() {
+	this->gameboard.translateDown();
+	update();
+}
+
+void RenderArea::translateBlockUp() {
+	this->gameboard.translateUp();
 	update();
 }
 
@@ -45,18 +51,14 @@ void RenderArea::paintEvent(QPaintEvent * /* event */) {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
 
-	for (int i = 0; i < Block::BLOCK_RANGE; ++i)
-		for (int j = 0; j < Block::BLOCK_RANGE; ++j) {
-			QRect rect(j*25+50, i*25+50, 25, 25);
+	for (int col = 0; col < gameboard.getWidth(); ++col)
+		for (int row = 0; row < gameboard.getHeight(); ++row) {
+			int gridSize = gameboard.getGridSize();
 
-			if (block.getMap(i, j)) {
-				painter.setPen(QPen(Qt::black));
-				painter.setBrush(QBrush(block.getColor()));
-			}
-			else {
-				painter.setPen(QPen(Qt::white));
-				painter.setBrush(QBrush(Qt::white));
-			}
+			QRect rect(col*gridSize, row*gridSize, gridSize, gridSize);
+
+			painter.setPen(QPen(Qt::white));
+			painter.setBrush(QBrush(gameboard.getGridColor(row, col)));
 			painter.drawRect(rect);
 		}
 }

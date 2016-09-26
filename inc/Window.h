@@ -10,11 +10,6 @@ class Window : public QWidget {
 public:
 	Window();
 
-private slots:
-	void shapeChanged();
-	void colorChanged();
-	void directionChanged();
-
 protected:
 	void keyPressEvent(QKeyEvent *event) override;
 
@@ -22,8 +17,6 @@ private:
 	static const int IdRole = Qt::UserRole;
 	
 	RenderArea *renderArea;
-	QLabel *blockShapeLabel, *blockColorLabel, *blockDirectionLabel;
-	QComboBox *blockShapeComboBox, *blockColorComboBox, *blockDirectionComboBox;
-};
+};	
 
 #endif // WINDOW_H
