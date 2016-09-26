@@ -49,6 +49,14 @@ void Gameboard::moveBlock(Block::BlockMotion motion) {
 	}
 	else if (motion == Block::BlockMotion::kTranslateDown
 		&& checkBlockStatus() == kDead) {
+		// block change to inactive
+		suppressActiveBlock();
+
+		// row elimination
+		int row;
+		while ((row = getFullRow()) != kNoFullRow)
+			eliminateRow(row);
+
 		generateNewBlock();
 	}
 }
@@ -120,7 +128,8 @@ Gameboard::BlockStatus Gameboard::checkBlockStatus() const {
 }
 
 bool Gameboard::generateNewBlock() {
-	suppressActiveBlock();
+	if (activeBlock != nullptr)
+		suppressActiveBlock();
 
 	Block *newBlock = new Block(getRandomShape(), 2, width/2,
 							getRandomDirection(), getRandomColor());
@@ -163,12 +172,38 @@ Block::BlockColor Gameboard::getRandomColor() const {
 	return Block::BlockColor(std::rand() % Block::BlockColor::kColorCount);
 }
 
+const int Gameboard::kNoFullRow = -1;
+
 int Gameboard::getFullRow() const {
-	return 0;
+	// find full row from bottom
+	for (int row = height-1; row >= 0; --row) {
+		bool isFull = true;
+		for (int col = 0; col < width; ++col)
+			if (grid[row][col].isActive ||
+				grid[row][col].color == Block::BlockColor::kNoBlock) {
+				isFull = false;
+				break;
+			}
+		if (isFull) return row;
+	}
+	return kNoFullRow;
 }
 
 void Gameboard::eliminateRow(int row) {
-
+	// shift inactive grids down
+	for (int i = row; i >= 0; --i)
+		for (int col = 0; col < width; ++col) {
+			// only update inactive grids
+			if (grid[i][col].isActive) continue;
+			if (i == 0 || grid[i-1][col].isActive) {
+				grid[i][col].isActive = false;
+				grid[i][col].color = Block::BlockColor::kNoBlock;
+			}
+			else {
+				grid[i][col] = grid[i-1][col];
+			}
+		}
+	updateGrid();
 }
 
 void Gameboard::resize(int width, int height) {

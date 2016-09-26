@@ -63,6 +63,7 @@ private:
 	Block::BlockColor getRandomColor() const;
 
 	// row elimination
+	static const int kNoFullRow;
 	int getFullRow() const;
 	void eliminateRow(int row);
 
