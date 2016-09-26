@@ -3,12 +3,18 @@
 #include <cstdlib>
 #include <ctime>
 
-const int Gameboard::maxWidth;
-const int Gameboard::minWidth;
-const int Gameboard::maxHeight;
-const int Gameboard::minHeight;
-const int Gameboard::maxGridSize;
-const int Gameboard::minGridSize;
+// maxWidth & maxHeight are defined in header for successful compilation
+const int Gameboard::defaultWidth    = 10;
+const int Gameboard::maxWidth            ;
+const int Gameboard::minWidth        =  5;
+
+const int Gameboard::defaultHeight   = 20;
+const int Gameboard::maxHeight           ;
+const int Gameboard::minHeight       = 15;
+
+const int Gameboard::defaultGridSize = 25;
+const int Gameboard::maxGridSize     = 50;
+const int Gameboard::minGridSize     = 10;
 
 Gameboard::Gameboard(int height, int width)
 	: activeBlock(nullptr),
@@ -155,6 +161,14 @@ Block::BlockDirection Gameboard::getRandomDirection() const {
 
 Block::BlockColor Gameboard::getRandomColor() const {
 	return Block::BlockColor(std::rand() % Block::BlockColor::kColorCount);
+}
+
+int Gameboard::getFullRow() const {
+	return 0;
+}
+
+void Gameboard::eliminateRow(int row) {
+
 }
 
 void Gameboard::resize(int width, int height) {

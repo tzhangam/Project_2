@@ -8,18 +8,6 @@ class Gameboard : public QObject {
 	Q_OBJECT
 
 public:
-	static const int defaultWidth    = 10;
-	static const int maxWidth        = 30;
-	static const int minWidth        =  5;
-
-	static const int defaultHeight   = 20;
-	static const int maxHeight       = 30;
-	static const int minHeight       = 15;
-
-	static const int defaultGridSize = 25;
-	static const int maxGridSize     = 50;
-	static const int minGridSize     = 10;
-
 	Gameboard(int height = defaultHeight, int width = defaultWidth);
 
 	Qt::GlobalColor getGridColor(int row, int col) const {
@@ -45,6 +33,18 @@ private:
 		kDead
 	};
 
+	static const int defaultWidth;
+	static const int maxWidth     = 30;
+	static const int minWidth;
+
+	static const int defaultHeight;
+	static const int maxHeight    = 30;
+	static const int minHeight;
+
+	static const int defaultGridSize;
+	static const int maxGridSize;
+	static const int minGridSize;
+
 	Block *activeBlock;
 	Grid grid[maxHeight][maxWidth];
 
@@ -53,6 +53,7 @@ private:
 	bool validateMove(const Block &candidate) const;
 	void updateGrid();
 
+	// new block generation
 	BlockStatus checkBlockStatus() const;
 	bool generateNewBlock();
 	void suppressActiveBlock();
@@ -60,6 +61,10 @@ private:
 	Block::BlockShape getRandomShape() const;
 	Block::BlockDirection getRandomDirection() const;
 	Block::BlockColor getRandomColor() const;
+
+	// row elimination
+	int getFullRow() const;
+	void eliminateRow(int row);
 
 	void resize(int width, int height);
 };
