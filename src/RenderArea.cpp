@@ -1,18 +1,17 @@
 #include "RenderArea.h"
 
 RenderArea::RenderArea(const Gameboard *gameboard, QWidget *parent)
-	: QWidget(parent)
+	: QWidget(parent),
+	  gameboard(gameboard)
 {
 	setBackgroundRole(QPalette::Base);
 	setAutoFillBackground(true);
-
-	this->gameboard = gameboard;
 
 	update();
 }
 
 QSize RenderArea::minimumSizeHint() const {
-	return QSize(200, 200);
+	return QSize(200, 400);
 }
 
 QSize RenderArea::sizeHint() const {

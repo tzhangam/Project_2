@@ -7,15 +7,14 @@
 #endif // QT_VERSION
 
 #include "RenderArea.h"
+#include "Gameboard.h"
+#include "Panel.h"
 
 class Window : public QWidget {
 	Q_OBJECT
 
 public:
 	Window();
-
-public slots:
-	void updatePanel();
 
 protected:
 	void keyPressEvent(QKeyEvent *event) override;
@@ -25,7 +24,7 @@ private:
 	
 	RenderArea *renderArea;
 	Gameboard *gameboard;
-	QLabel *scoreLabel, *comboLabel, *levelLabel;
+	Panel *panel;
 };	
 
 #endif // WINDOW_H
