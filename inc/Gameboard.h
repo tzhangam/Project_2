@@ -24,6 +24,7 @@ public:
 
 public slots:
 	void moveBlock(Block::BlockMotion motion);
+	void startGame();
 
 private slots:
 	void blockDescend();
@@ -60,6 +61,7 @@ private:
 	int width, height, gridSize;
 
 	QTimer *timer;
+	volatile bool isGameStart;
 
 	bool validateMove(const Block &candidate) const;
 	void updateGrid();
@@ -79,6 +81,9 @@ private:
 	void eliminateRow(int row);
 
 	void resize(int width, int height);
+
+	void start();
+	void reset();
 };
 
 #endif // GAMEBOARD_H

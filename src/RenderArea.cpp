@@ -26,6 +26,11 @@ void RenderArea::moveBlock(Block::BlockMotion motion) {
 	update();
 }
 
+void RenderArea::startGame() {
+	this->gameboard.startGame();
+	update();
+}
+
 void RenderArea::paintEvent(QPaintEvent * /* event */) {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);

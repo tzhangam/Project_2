@@ -16,27 +16,19 @@ const int Gameboard::defaultGridSize = 20;
 const int Gameboard::maxGridSize     = 50;
 const int Gameboard::minGridSize     = 10;
 
-Gameboard::Gameboard(int height, int width, int gridSize) {	
+Gameboard::Gameboard(int height, int width, int gridSize) 
+	: activeBlock(nullptr),
+	  timer(nullptr),
+	  isGameStart(false)
+{	
 	// seed for random generator
 	std::srand(std::time(0));
+
+	reset();
 
 	this->width = tetris::clamp(minWidth, width, maxWidth);
 	this->height = tetris::clamp(minHeight, height, maxHeight);
 	this->gridSize = tetris::clamp(minGridSize, gridSize, maxGridSize);
-
-	activeBlock = new Block(getRandomShape(), 2, width/2,
-							getRandomDirection(), getRandomColor());
-	for (int i = 0; i < maxHeight; ++i)
-		for (int j = 0; j < maxWidth; ++j) {
-			grid[i][j].color = Block::BlockColor::kNoBlock;
-			grid[i][j].isActive = false;
-		}
-	if (validateMove(*activeBlock))
-		updateGrid();
-
-	timer = new QTimer(this);
-	connect(timer, SIGNAL(timeout()), this, SLOT(blockDescend()));
-	timer->start(1000);
 }
 
 void Gameboard::moveBlock(Block::BlockMotion motion) {
@@ -59,8 +51,15 @@ void Gameboard::moveBlock(Block::BlockMotion motion) {
 		while ((row = getFullRow()) != kNoFullRow)
 			eliminateRow(row);
 
-		generateNewBlock();
+		if (!generateNewBlock()) {
+			reset();
+		}
 	}
+}
+
+void Gameboard::startGame() {
+	if (!isGameStart)
+		start();
 }
 
 void Gameboard::blockDescend() {
@@ -216,4 +215,46 @@ void Gameboard::eliminateRow(int row) {
 void Gameboard::resize(int width, int height) {
 	width = tetris::clamp(minWidth, width, maxWidth);
 	height = tetris::clamp(minHeight, height, maxHeight);
+}
+
+void Gameboard::start() {
+	if (activeBlock != nullptr)
+		delete activeBlock;
+
+	if (timer != nullptr)
+		delete timer;
+
+	activeBlock = new Block(getRandomShape(), 2, width/2,
+							getRandomDirection(), getRandomColor());
+	
+	if (validateMove(*activeBlock))
+		updateGrid();
+
+	timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), this, SLOT(blockDescend()));
+	timer->start(1000);
+
+	isGameStart = true;
+}
+
+void Gameboard::reset() {
+	for (int i = 0; i < maxHeight; ++i)
+		for (int j = 0; j < maxWidth; ++j) {
+			grid[i][j].color = Block::BlockColor::kNoBlock;
+			grid[i][j].isActive = false;
+		}
+
+	if (activeBlock != nullptr)
+		delete activeBlock;
+	activeBlock = nullptr;
+
+	if (timer != nullptr)
+		delete timer;
+	timer = nullptr;
+
+	this->width = defaultWidth;
+	this->height = defaultHeight;
+	this->gridSize = defaultGridSize;
+
+	isGameStart = false;
 }

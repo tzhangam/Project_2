@@ -21,6 +21,7 @@ public:
 
 public slots:
 	void moveBlock(Block::BlockMotion motion);
+	void startGame();
 
 protected:
 	void paintEvent(QPaintEvent *event) override;
