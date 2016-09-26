@@ -8,6 +8,9 @@ using namespace std;
   Add row_is_full(), eliminate_full_row(). 9-25-2016
   Add print_map(). 9-25-2016
   Swap row with column. bitmap[row][col]. 9-25-2016
+  Add an argument for eliminate_full_row(). 9-26-2016
+  Add merge_full();
+  Change all elimination functions' arguments to 1 based. 9-26-2016 
 */
 Bitmap_Manip::Bitmap_Manip(int col,int row):col_number(col),row_number(row){
 	init_bitmap();
@@ -19,7 +22,8 @@ Bitmap_Manip::Bitmap_Manip(int col,int row):col_number(col),row_number(row){
       bitmap[i][j]=(i+j)/7;}
     
   }
-  
+
+  bitmap[15][8]=bitmap[18][1]=bitmap[19][0]=0;
   #endif
 
 }
@@ -33,22 +37,22 @@ void Bitmap_Manip::init_bitmap(){
     }
 }
 bool Bitmap_Manip::row_is_full(int row){
-  //row here is 0 based.
+  //row here is 1 based.
    for(int i=0;i<col_number;i++){
-    if(get_bitmap()[row][i]==0)
+    if(get_bitmap()[row-1][i]==0)
       return false;
   }
   return true;
 }
 
-void Bitmap_Manip::down_shift_map(int d){
+void Bitmap_Manip::down_shift_map(int r, int d){
   //Delete the d rows at the bottom.
   for(int i=1;i<=d;i++)
   {
-    delete[] bitmap[row_number-i];
+    delete[] bitmap[r-i];
   }
   //Downshift the subarray pointers by d units. 
-  for(int j=row_number-1;j>=d;j--)
+  for(int j=r-1;j>=d;j--)
   {
     bitmap[j]=bitmap[j-d];
   }
@@ -59,19 +63,30 @@ void Bitmap_Manip::down_shift_map(int d){
 }
 
 #if 1
-int Bitmap_Manip::eliminate_full_row(){
+int Bitmap_Manip::eliminate_full_row(int r){
 
   int num_full_row=0;
-  while(row_is_full(row_number-1-num_full_row)){
+  while(row_is_full(r-num_full_row)){
     num_full_row++;
   }
 
-  down_shift_map(num_full_row);
+  down_shift_map(r,num_full_row);
 
   return num_full_row;
 }
 #endif
-
+#if 1
+int Bitmap_Manip::merge_full(){
+  int cursor=row_number;
+  int num=0;
+  for(;cursor>0;cursor--){
+    if(row_is_full(cursor)){
+      num+=eliminate_full_row(cursor);
+    }
+  }
+  return num;
+}
+#endif
 int** Bitmap_Manip::get_bitmap(){
 	return bitmap;
 }
