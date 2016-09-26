@@ -26,7 +26,7 @@ public:
 	int getScore() const { return score; }
 	int getLevel() const { return level; }
 
-public slots:
+	// move current block and handle row elimination
 	void moveBlock(Block::BlockMotion motion);
 	void startGame();
 
@@ -34,21 +34,14 @@ private slots:
 	void blockDescend();
 
 signals:
-	void blockMoved();
-	void sendCombo();
-	void sendScore();
-	void sendLevel();
+	void updateRenderArea();
+	void updatePanel();
 
 private:
 	typedef struct {
 		Block::BlockColor color;
 		bool isActive;
 	} Grid;
-
-	enum BlockStatus {
-		kActive,
-		kDead
-	};
 
 	static const int defaultWidth;
 	static const int maxWidth     = 30;
@@ -69,15 +62,13 @@ private:
 
 	QTimer *timer;
 	volatile bool isGameStart;
-	int combo;
-	int score;
-	int level;
+
+	int combo, score, level;
 
 	bool validateMove(const Block &candidate) const;
 	void updateGrid();
 
 	// new block generation
-	BlockStatus checkBlockStatus() const;
 	bool generateNewBlock();
 	void suppressActiveBlock();
 
@@ -92,6 +83,7 @@ private:
 
 	void resize(int width, int height);
 
+	// start timer and generating new block
 	void start();
 	void reset();
 };

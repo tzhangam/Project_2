@@ -14,22 +14,17 @@ class RenderArea : public QWidget {
 	Q_OBJECT
 
 public:
-	RenderArea(QWidget *parent = 0);
+	RenderArea(const Gameboard *gameboard, QWidget *parent = 0);
 
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
-
-	const Gameboard *get() const {return &gameboard; }
-
-public slots:
-	void moveBlock(Block::BlockMotion motion);
-	void startGame();
 
 protected:
 	void paintEvent(QPaintEvent *event) override;
 
 private:
-	Gameboard gameboard;
+	const Gameboard* gameboard;
+
 };
 
 #endif // RENDERAREA_H

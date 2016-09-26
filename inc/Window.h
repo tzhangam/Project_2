@@ -14,8 +14,6 @@ class Window : public QWidget {
 public:
 	Window();
 
-	const Gameboard *gameboard;
-
 public slots:
 	void updatePanel();
 
@@ -26,7 +24,7 @@ private:
 	static const int IdRole = Qt::UserRole;
 	
 	RenderArea *renderArea;
-	
+	Gameboard *gameboard;
 	QLabel *scoreLabel, *comboLabel, *levelLabel;
 };	
 
