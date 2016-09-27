@@ -4,11 +4,13 @@ Window::Window() {
     gameboard = new Gameboard;
 	renderArea = new RenderArea(gameboard);
 	panel = new Panel(gameboard);
+	previewArea = new PreviewArea(gameboard);
 
 	// layout
 	QGridLayout *mainLayout = new QGridLayout;
 	mainLayout->addWidget(renderArea, 0, 0, 4, 4);
 	mainLayout->addWidget(panel, 3, 4, 1, 2);
+	mainLayout->addWidget(previewArea, 0, 4, 2, 2);
 	setLayout(mainLayout);
 
 	// connect
@@ -18,6 +20,8 @@ Window::Window() {
 		renderArea, SLOT(update()));
 	connect(gameboard, SIGNAL(gameOver()),
 		this, SLOT(gameOver()));
+	connect(gameboard, SIGNAL(updatePreviewArea()),
+		previewArea, SLOT(update()));
 
 	setWindowTitle(tr("Tetris\n"));
 

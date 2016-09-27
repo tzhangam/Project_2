@@ -25,6 +25,7 @@ Gameboard::Gameboard(int height, int width, int gridSize)
 {	
 	// seed for random generator
 	std::srand(std::time(0));
+	nextBlock = generateNewBlock();
 
 	timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(blockDescend()));
@@ -42,13 +43,12 @@ void Gameboard::moveBlock(Block::BlockMotion motion) {
 	Block newBlock(*activeBlock);
 	newBlock.move(motion);
 
-	if (validateMove(newBlock)) {
+	if (validate(newBlock, false)) {
 		activeBlock->move(motion);
 		updateGrid();
 	}
 	else if (motion == Block::BlockMotion::kTranslateDown) {
-		// block change to inactive
-		suppressActiveBlock();
+		bool updateSucceed = updateActiveBlock();
 
 		// row elimination
 		int row;
@@ -67,9 +67,12 @@ void Gameboard::moveBlock(Block::BlockMotion motion) {
 		}
 		emit updatePanel();
 
-		if (!generateNewBlock()) {
+		if (!updateSucceed) {
 			emit gameOver();
 			reset();
+		}
+		else {
+			emit updatePreviewArea();
 		}
 	}
 }
@@ -83,7 +86,7 @@ void Gameboard::blockDescend() {
 	moveBlock(Block::BlockMotion::kTranslateDown);
 }
 
-bool Gameboard::validateMove(const Block &candidate) const {
+bool Gameboard::validate(const Block &candidate, bool isNew) const {
 	int range = Block::BLOCK_HALF_RANGE;
 	for (int i = -range+1; i < range; ++i)
 		for (int j = -range+1; j < range; ++j)
@@ -91,10 +94,13 @@ bool Gameboard::validateMove(const Block &candidate) const {
 				int row = candidate.getX() + i;
 				int col = candidate.getY() + j;
 
-				// out of gameboard
-				if (!tetris::inRange(0, row, height-1)
-					|| !tetris::inRange(0, col, width-1))
-					return false;
+				// for current block
+				if (!isNew) {
+					// out of gameboard
+					if (!tetris::inRange(0, row, height-1)
+						|| !tetris::inRange(0, col, width-1))
+						return false;
+				}
 
 				// conflict with inactive grid
 				if (!grid[row][col].isActive
@@ -132,38 +138,27 @@ void Gameboard::updateGrid() {
 	emit updateRenderArea();
 }
 
-bool Gameboard::generateNewBlock() {
-	if (activeBlock != nullptr)
-		suppressActiveBlock();
+Block *Gameboard::generateNewBlock() {
+	return new Block(getRandomShape(), 2, width/2,
+				getRandomDirection(), getRandomColor());
+}
 
-	Block *newBlock = new Block(getRandomShape(), 2, width/2,
-							getRandomDirection(), getRandomColor());
-	if (validateMove(*newBlock)) {
-		activeBlock = newBlock;
+bool Gameboard::updateActiveBlock() {
+	for (int row = 0; row < height; ++row)
+		for (int col = 0; col < width; ++col)
+			grid[row][col].isActive = false;
+	delete activeBlock;
+
+	if (validate(*nextBlock, true)) {
+		activeBlock = nextBlock;
+		nextBlock = generateNewBlock();
 		updateGrid();
 		return true;
 	}
 	else {
-		delete newBlock;
+		activeBlock = nullptr;
 		return false;
 	}
-}
-
-void Gameboard::suppressActiveBlock() {
-	if (activeBlock == nullptr) return;
-
-	int range = Block::BLOCK_HALF_RANGE;
-	for (int i = -range+1; i < range; ++i)
-		for (int j = -range+1; j < range; ++j) 
-			if (activeBlock->getMap(i+range-1, j+range-1)) {
-				int row = activeBlock->getX() + i;
-				int col = activeBlock->getY() + j;
-
-				grid[row][col].isActive = false;
-			}
-	delete activeBlock;
-	activeBlock = nullptr;
-	updateGrid();
 }
 
 Block::BlockShape Gameboard::getRandomShape() const {
@@ -219,10 +214,7 @@ void Gameboard::resize(int width, int height) {
 
 void Gameboard::start() {
 	reset();
-
-	activeBlock = new Block(getRandomShape(), 2, width/2,
-							getRandomDirection(), getRandomColor());
-	updateGrid();
+	updateActiveBlock();
 
 	combo = score = 0;
 	level = 1;

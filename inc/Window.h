@@ -9,6 +9,7 @@
 #include "RenderArea.h"
 #include "Gameboard.h"
 #include "Panel.h"
+#include "PreviewArea.h"
 
 class Window : public QWidget {
 	Q_OBJECT
@@ -28,6 +29,7 @@ private:
 	RenderArea *renderArea;
 	Gameboard *gameboard;
 	Panel *panel;
+	PreviewArea *previewArea;
 };	
 
 #endif // WINDOW_H

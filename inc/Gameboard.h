@@ -13,6 +13,7 @@ public:
 	Gameboard(int height = defaultHeight,
 		int width = defaultWidth, int gridSize = defaultGridSize);
 
+	// for RenderArea class
 	Qt::GlobalColor getGridColor(int row, int col) const {
 		row = tetris::clamp(0, row, height-1);
 		col = tetris::clamp(0, col, width-1);
@@ -22,9 +23,18 @@ public:
 	int getHeight() const { return height; }
 	int getGridSize() const { return gridSize; }
 
+	// for Panel class
 	int getCombo() const { return combo; }
 	int getScore() const { return score; }
 	int getLevel() const { return level; }
+
+	// for PreviewArea class
+	Qt::GlobalColor getNextBlockColor(int row, int col) const {
+		// if (activeBlock != nullptr)
+			return (nextBlock->getMap(row, col)) ?
+				nextBlock->getColor() : Block::convert(Block::BlockColor::kNoBlock); 
+		// else return Block::convert(Block::BlockColor::kNoBlock);
+	}
 
 public slots:
 	// move current block and handle row elimination
@@ -37,6 +47,7 @@ private slots:
 signals:
 	void updateRenderArea();
 	void updatePanel();
+	void updatePreviewArea();
 	void gameOver();
 
 private:
@@ -57,7 +68,7 @@ private:
 	static const int maxGridSize;
 	static const int minGridSize;
 
-	Block *activeBlock;
+	Block *activeBlock, *nextBlock;
 	Grid grid[maxHeight][maxWidth];
 
 	int width, height, gridSize;
@@ -67,12 +78,12 @@ private:
 
 	int combo, score, level;
 
-	bool validateMove(const Block &candidate) const;
+	bool validate(const Block &candidate, bool isNew) const;
 	void updateGrid();
 
 	// new block generation
-	bool generateNewBlock();
-	void suppressActiveBlock();
+	Block *generateNewBlock();
+	bool updateActiveBlock();
 
 	Block::BlockShape getRandomShape() const;
 	Block::BlockDirection getRandomDirection() const;
