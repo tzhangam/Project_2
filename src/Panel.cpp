@@ -3,36 +3,30 @@
 #include <cstdio>
 #include <cstring>
 
-Panel::Panel(const Gameboard *gameboard, QWidget *parent)
+Panel::Panel(const Gameboard &gameboard, QWidget *parent)
 	: QWidget(parent),
+	  scoreLabel(),
+	  comboLabel(),
+	  levelLabel(),
 	  gameboard(gameboard)
 {
 	// labels & layout
 	QGridLayout *layout = new QGridLayout;
 
 	QLabel *tmpLabel = new QLabel(tr("Score"));
-	scoreLabel = new QLabel;
 	layout->addWidget(tmpLabel, 0, 0, Qt::AlignRight);
-	layout->addWidget(scoreLabel, 0, 1);
+	layout->addWidget(&scoreLabel, 0, 1);
 
 	tmpLabel = new QLabel(tr("Combo"));
-	comboLabel = new QLabel;
 	layout->addWidget(tmpLabel, 1, 0, Qt::AlignRight);
-	layout->addWidget(comboLabel, 1, 1);
+	layout->addWidget(&comboLabel, 1, 1);
 
 	tmpLabel = new QLabel(tr("Level"));
-	levelLabel = new QLabel;
 	layout->addWidget(tmpLabel, 2, 0, Qt::AlignRight);
-	layout->addWidget(levelLabel, 2, 1);
+	layout->addWidget(&levelLabel, 2, 1);
 	setLayout(layout);
 
 	updatePanel();
-}
-
-Panel::~Panel() {
-	delete scoreLabel;
-	delete comboLabel;
-	delete levelLabel;
 }
 
 QSize Panel::minimumSizeHint() const {
@@ -44,7 +38,7 @@ QSize Panel::sizeHint() const {
 }
 
 void Panel::updatePanel() {
-	scoreLabel->setNum(gameboard->getScore());
-	comboLabel->setNum(gameboard->getCombo());
-	levelLabel->setNum(gameboard->getLevel());
+	scoreLabel.setNum(gameboard.getScore());
+	comboLabel.setNum(gameboard.getCombo());
+	levelLabel.setNum(gameboard.getLevel());
 }

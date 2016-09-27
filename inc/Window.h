@@ -16,7 +16,6 @@ class Window : public QWidget {
 
 public:
 	Window();
-	~Window();
 
 public slots:
 	void gameOver();
@@ -27,10 +26,10 @@ protected:
 private:
 	static const int IdRole = Qt::UserRole;
 	
-	RenderArea *renderArea;
-	Gameboard *gameboard;
-	Panel *panel;
-	PreviewArea *previewArea;
+	Gameboard gameboard;
+	RenderArea renderArea;
+	Panel panel;
+	PreviewArea previewArea;
 };	
 
 #endif // WINDOW_H

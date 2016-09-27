@@ -12,7 +12,7 @@ class PreviewArea : public QWidget {
 	Q_OBJECT
 
 public:
-	PreviewArea(const Gameboard *gameboard, QWidget *parent = 0);
+	PreviewArea(const Gameboard &gameboard, QWidget *parent = 0);
 
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
@@ -21,7 +21,7 @@ protected:
 	void paintEvent(QPaintEvent *event) override;
 
 private:
-	const Gameboard *gameboard;
+	const Gameboard &gameboard;
 };
 
 #endif // PREVIEW_AREA_H

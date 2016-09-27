@@ -1,7 +1,7 @@
 #include "PreviewArea.h"
 #include "Block.h"
 
-PreviewArea::PreviewArea(const Gameboard *gameboard, QWidget *parent)
+PreviewArea::PreviewArea(const Gameboard &gameboard, QWidget *parent)
 	: QWidget(parent),
 	  gameboard(gameboard)
 {
@@ -25,12 +25,12 @@ void PreviewArea::paintEvent(QPaintEvent * /* event */) {
 
 	for (int row = 0; row < Block::BLOCK_RANGE; ++row)
 		for (int col = 0; col < Block::BLOCK_RANGE; ++col) {
-			int gridSize = gameboard->getGridSize();
+			int gridSize = gameboard.getGridSize();
 
 			QRect rect(col*gridSize, row*gridSize, gridSize, gridSize);
 
 			painter.setPen(QPen(Qt::white));
-			painter.setBrush(QBrush(gameboard->getNextBlockColor(row, col)));
+			painter.setBrush(QBrush(gameboard.getNextBlockColor(row, col)));
 			painter.drawRect(rect);
 		}
 }

@@ -12,8 +12,7 @@ class Panel : public QWidget {
 	Q_OBJECT
 
 public:
-	Panel(const Gameboard *gameboard, QWidget *parent = 0);
-	~Panel();
+	Panel(const Gameboard &gameboard, QWidget *parent = 0);
 
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
@@ -22,8 +21,8 @@ public slots:
 	void updatePanel();
 
 private:
-	QLabel *scoreLabel, *comboLabel, *levelLabel;
-	const Gameboard *gameboard;
+	QLabel scoreLabel, comboLabel, levelLabel;
+	const Gameboard &gameboard;
 };
 
 #endif // PANEL_H
