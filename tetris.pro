@@ -19,4 +19,5 @@ HEADERS += inc/Block.h \
            inc/PreviewArea.h \
            inc/Window.h \
            inc/misc.h
+RESOURCES += tetris.qrc
 QMAKE_CLEAN += *.o moc_*

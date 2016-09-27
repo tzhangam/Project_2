@@ -10,7 +10,7 @@ Window::Window()
 	QGridLayout *mainLayout = new QGridLayout;
 	mainLayout->addWidget(&renderArea, 0, 0, 4, 4);
 	mainLayout->addWidget(&panel, 3, 4, 1, 2);
-	mainLayout->addWidget(&previewArea, 0, 4, 2, 2);
+	mainLayout->addWidget(&previewArea, 0, 4, 2, 1);
 	setLayout(mainLayout);
 
 	// connect

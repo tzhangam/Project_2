@@ -4,7 +4,8 @@ RenderArea::RenderArea(const Gameboard &gameboard, QWidget *parent)
 	: QWidget(parent),
 	  gameboard(gameboard)
 {
-	setBackgroundRole(QPalette::Base);
+	pixmap.load(":/images/background.bmp");
+	setBackgroundRole(QPalette::WindowText);
 	setAutoFillBackground(true);
 
 	update();
@@ -21,6 +22,7 @@ QSize RenderArea::sizeHint() const {
 void RenderArea::paintEvent(QPaintEvent * /* event */) {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
+	painter.drawPixmap(0, 0, pixmap);
 
 	for (int col = 0; col < gameboard.getWidth(); ++col)
 		for (int row = 0; row < gameboard.getHeight(); ++row) {
@@ -28,8 +30,11 @@ void RenderArea::paintEvent(QPaintEvent * /* event */) {
 
 			QRect rect(col*gridSize, row*gridSize, gridSize, gridSize);
 
-			painter.setPen(QPen(Qt::white));
-			painter.setBrush(QBrush(gameboard.getGridColor(row, col)));
+			Qt::GlobalColor color = gameboard.getGridColor(row, col);
+			
+			painter.setPen(QPen((color == Qt::transparent) ? 
+				Qt::transparent : Qt::white));
+			painter.setBrush(QBrush(color));
 			painter.drawRect(rect);
 		}
 }

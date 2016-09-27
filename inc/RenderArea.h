@@ -24,7 +24,7 @@ protected:
 
 private:
 	const Gameboard &gameboard;
-
+	QPixmap pixmap;
 };
 
 #endif // RENDERAREA_H

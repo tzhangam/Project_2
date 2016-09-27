@@ -5,6 +5,7 @@ Makefile
 .DS_Store
 tetris.app/
 tetris
+qrc_*
 
 
 # Windows image file caches
