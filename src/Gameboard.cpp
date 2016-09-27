@@ -74,8 +74,8 @@ void Gameboard::moveBlock(Block::BlockMotion motion) {
 		emit updatePanel();
 
 		if (!updateSucceed) {
+			endGame();
 			emit gameOver();
-			reset();
 		}
 		else {
 			emit updatePreviewArea();
@@ -86,6 +86,14 @@ void Gameboard::moveBlock(Block::BlockMotion motion) {
 void Gameboard::startGame() {
 	if (!isGameStart)
 		start();
+}
+
+void Gameboard::endGame() {
+	isGameStart = false;
+}
+
+void Gameboard::resetBoard() {
+	reset();
 }
 
 void Gameboard::blockDescend() {
@@ -239,6 +247,7 @@ void Gameboard::reset() {
 			grid[i][j].color = Block::BlockColor::kNoBlock;
 			grid[i][j].isActive = false;
 		}
+	updateGrid();
 
 	if (activeBlock != nullptr) {
 		delete activeBlock;

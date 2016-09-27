@@ -46,7 +46,7 @@ void Window::gameOver() {
 	QPushButton *quitButton = msgBox->addButton(
 		tr("&Quit"), QMessageBox::AcceptRole);
 	connect(continueButton, SIGNAL(clicked()),
-		this->gameboard, SLOT(startGame()));
+		this->gameboard, SLOT(resetBoard()));
 	connect(quitButton, SIGNAL(clicked()),
 		qApp, SLOT(quit()));
 	msgBox->show();

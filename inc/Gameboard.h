@@ -41,6 +41,8 @@ public slots:
 	// move current block and handle row elimination
 	void moveBlock(Block::BlockMotion motion);
 	void startGame();
+	void endGame();
+	void resetBoard();
 
 private slots:
 	void blockDescend();
