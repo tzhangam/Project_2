@@ -31,10 +31,8 @@ public:
 
 	// for PreviewArea class
 	Qt::GlobalColor getNextBlockColor(int row, int col) const {
-		// if (activeBlock != nullptr)
-			return (nextBlock->getMap(row, col)) ?
-				nextBlock->getColor() : Block::convert(Block::BlockColor::kNoBlock); 
-		// else return Block::convert(Block::BlockColor::kNoBlock);
+		return (nextBlock->getMap(row, col)) ?
+			nextBlock->getColor() : Block::convert(Block::BlockColor::kNoBlock); 
 	}
 
 public slots:
