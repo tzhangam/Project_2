@@ -12,6 +12,7 @@ class Gameboard : public QObject {
 public:
 	Gameboard(int height = defaultHeight,
 		int width = defaultWidth, int gridSize = defaultGridSize);
+	~Gameboard();
 
 	// for RenderArea class
 	Qt::GlobalColor getGridColor(int row, int col) const {

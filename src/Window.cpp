@@ -30,6 +30,13 @@ Window::Window() {
 	setFocus();
 }
 
+Window::~Window() {
+	delete renderArea;
+	delete gameboard;
+	delete panel;
+	delete previewArea;
+}
+
 void Window::gameOver() {
 	QMessageBox *msgBox = new QMessageBox();
 	msgBox->setWindowTitle(tr("Game Over"));

@@ -1,4 +1,4 @@
-TEMPLATE = app
+TEMPLATE = app debug
 TARGET = tetris
 
 QT += widgets core

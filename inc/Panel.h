@@ -13,6 +13,7 @@ class Panel : public QWidget {
 
 public:
 	Panel(const Gameboard *gameboard, QWidget *parent = 0);
+	~Panel();
 
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;

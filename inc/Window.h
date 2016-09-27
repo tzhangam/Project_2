@@ -16,6 +16,7 @@ class Window : public QWidget {
 
 public:
 	Window();
+	~Window();
 
 public slots:
 	void gameOver();
