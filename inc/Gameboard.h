@@ -26,6 +26,7 @@ public:
 	int getScore() const { return score; }
 	int getLevel() const { return level; }
 
+public slots:
 	// move current block and handle row elimination
 	void moveBlock(Block::BlockMotion motion);
 	void startGame();
@@ -36,6 +37,7 @@ private slots:
 signals:
 	void updateRenderArea();
 	void updatePanel();
+	void gameOver();
 
 private:
 	typedef struct {

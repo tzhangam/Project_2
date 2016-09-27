@@ -68,6 +68,7 @@ void Gameboard::moveBlock(Block::BlockMotion motion) {
 		emit updatePanel();
 
 		if (!generateNewBlock()) {
+			emit gameOver();
 			reset();
 		}
 	}

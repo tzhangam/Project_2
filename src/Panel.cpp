@@ -24,7 +24,7 @@ Panel::Panel(const Gameboard *gameboard, QWidget *parent)
 	tmpLabel = new QLabel(tr("Level"));
 	levelLabel = new QLabel();
 	layout->addWidget(tmpLabel, 2, 0, Qt::AlignRight);
-	layout->addWidget(comboLabel, 2, 1);
+	layout->addWidget(levelLabel, 2, 1);
 	setLayout(layout);
 
 	updatePanel();

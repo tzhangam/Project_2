@@ -11,16 +11,34 @@ Window::Window() {
 	mainLayout->addWidget(panel, 3, 4, 1, 2);
 	setLayout(mainLayout);
 
+	// connect
 	connect(gameboard, SIGNAL(updatePanel()),
 		panel, SLOT(updatePanel()));
 	connect(gameboard, SIGNAL(updateRenderArea()),
 		renderArea, SLOT(update()));
+	connect(gameboard, SIGNAL(gameOver()),
+		this, SLOT(gameOver()));
 
 	setWindowTitle(tr("Tetris\n"));
 
 	// set keyboard focus policy
 	setFocusPolicy(Qt::ClickFocus);
 	setFocus();
+}
+
+void Window::gameOver() {
+	QMessageBox *msgBox = new QMessageBox();
+	msgBox->setWindowTitle(tr("Game Over"));
+	msgBox->setText(tr("Oops, you're dead.."));
+	QPushButton *continueButton = msgBox->addButton(
+		tr("&Play again"), QMessageBox::AcceptRole);
+	QPushButton *quitButton = msgBox->addButton(
+		tr("&Quit"), QMessageBox::AcceptRole);
+	connect(continueButton, SIGNAL(clicked()),
+		this->gameboard, SLOT(startGame()));
+	connect(quitButton, SIGNAL(clicked()),
+		qApp, SLOT(quit()));
+	msgBox->show();
 }
 
 void Window::keyPressEvent(QKeyEvent *event) {

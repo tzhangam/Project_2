@@ -16,6 +16,9 @@ class Window : public QWidget {
 public:
 	Window();
 
+public slots:
+	void gameOver();
+
 protected:
 	void keyPressEvent(QKeyEvent *event) override;
 
