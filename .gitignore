@@ -4,6 +4,7 @@ Makefile
 .qmake.stash
 .DS_Store
 tetris.app/
+tetris
 
 
 # Windows image file caches
