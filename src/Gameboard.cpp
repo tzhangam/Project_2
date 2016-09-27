@@ -23,6 +23,10 @@ Gameboard::Gameboard(int height, int width, int gridSize)
 	  score(0),
 	  level(1)
 {	
+	this->width = tetris::clamp(minWidth, width, maxWidth);
+	this->height = tetris::clamp(minHeight, height, maxHeight);
+	this->gridSize = tetris::clamp(minGridSize, gridSize, maxGridSize);
+	
 	// seed for random generator
 	std::srand(std::time(0));
 	nextBlock = generateNewBlock();
@@ -31,10 +35,6 @@ Gameboard::Gameboard(int height, int width, int gridSize)
 	connect(timer, SIGNAL(timeout()), this, SLOT(blockDescend()));
 
 	reset();
-
-	this->width = tetris::clamp(minWidth, width, maxWidth);
-	this->height = tetris::clamp(minHeight, height, maxHeight);
-	this->gridSize = tetris::clamp(minGridSize, gridSize, maxGridSize);
 }
 
 void Gameboard::moveBlock(Block::BlockMotion motion) {
