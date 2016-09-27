@@ -221,6 +221,7 @@ void Gameboard::resize(int width, int height) {
 void Gameboard::start() {
 	reset();
 	updateActiveBlock();
+	emit updatePreviewArea();
 
 	combo = score = 0;
 	level = 1;
