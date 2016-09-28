@@ -33,7 +33,7 @@ void RenderArea::paintEvent(QPaintEvent * /* event */) {
 			Qt::GlobalColor color = gameboard.getGridColor(row, col);
 			
 			painter.setPen(QPen((color == Qt::transparent) ? 
-				Qt::transparent : Qt::white));
+				Qt::transparent : Qt::black));
 			painter.setBrush(QBrush(color));
 			painter.drawRect(rect);
 		}
