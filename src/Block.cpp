@@ -5,7 +5,8 @@
 
 Block::Block(BlockShape shape, int x, int y,
 	BlockDirection direction, BlockColor color)
-	: shape(shape),
+	: QObject(),
+	  shape(shape),
 	  direction(direction),
 	  color(color),
 	  centerX(x),
