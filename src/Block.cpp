@@ -16,7 +16,8 @@ Block::Block(BlockShape shape, int x, int y,
 }
 
 Block::Block(const Block &rhs)
-	: shape(rhs.getShape()),
+	: QObject(),
+	  shape(rhs.getShape()),
 	  direction(rhs.getDirection()),
 	  centerX(rhs.getX()),
 	  centerY(rhs.getY())
