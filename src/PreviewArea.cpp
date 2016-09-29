@@ -29,7 +29,12 @@ void PreviewArea::paintEvent(QPaintEvent * /* event */) {
 
 			QRect rect(col*gridSize, row*gridSize, gridSize, gridSize);
 
-			painter.setPen(QPen(Qt::white));
+			 Qt::GlobalColor color = gameboard.getNextBlockColor(row, col);
+			
+			 painter.setPen(QPen((color == Qt::transparent) ? 
+			 	Qt::transparent : Qt::black));
+			
+			// painter.setPen(QPen(Qt::black));
 			painter.setBrush(QBrush(gameboard.getNextBlockColor(row, col)));
 			painter.drawRect(rect);
 		}
