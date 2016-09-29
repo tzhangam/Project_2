@@ -9,7 +9,11 @@
 
 #include "Block.h"
 #include "Gameboard.h"
-
+/*
+	*   Class RenderArea serves as major output interface.It converts 
+	*structural and color information stored in the gridmaps of Class 
+	*Gameboard into central graphical display.
+*/
 class RenderArea : public QWidget {
 	Q_OBJECT
 

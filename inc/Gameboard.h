@@ -5,7 +5,10 @@
 #include "misc.h"
 
 #include <QTimer>
-
+/*
+	*	Class Gameboard possesses grid maps and provides functions for block actions and line elimination.
+	*It also sends out update signals to parallel classes when modifications were made.
+*/
 class Gameboard : public QObject {
 	Q_OBJECT
 
@@ -78,8 +81,10 @@ private:
 	volatile bool isGameStart;
 
 	int combo, score, level;
-
+	
+	//validate new block generation and block motion attempt
 	bool validate(const Block &candidate, bool isNew) const;
+	
 	void updateGrid();
 
 	// new block generation

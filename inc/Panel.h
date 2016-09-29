@@ -7,11 +7,14 @@
 #endif // QT_VERSION
 
 #include "Gameboard.h"
-
+/*
+	*  Class Panel handles score calculation and the display of score, level, combo. 
+*/
 class Panel : public QWidget {
 	Q_OBJECT
 
 public:
+	//Note:It is mandatory to pass Gameboard object to a Panel object.
 	Panel(const Gameboard &gameboard, QWidget *parent = 0);
 
 	QSize minimumSizeHint() const override;

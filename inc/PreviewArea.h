@@ -7,7 +7,9 @@
 #endif // QT_VERSION
 
 #include "Gameboard.h"
-
+/*
+	Class PreviewArea handles the display of the next coming block.
+*/
 class PreviewArea : public QWidget {
 	Q_OBJECT
 

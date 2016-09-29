@@ -3,7 +3,10 @@
 
 #include <QColor>
 #include <QObject>
-
+/*
+	Class Block stores the shape, color, position and orientation for each block.
+	It provides functions for block motion.
+*/
 class Block : public QObject {
 	Q_OBJECT
 

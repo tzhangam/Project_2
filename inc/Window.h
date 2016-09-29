@@ -10,7 +10,10 @@
 #include "Gameboard.h"
 #include "Panel.h"
 #include "PreviewArea.h"
-
+/*
+	*	Window constitutes of all other the sub widgets. It detects key press, emit game
+	*start and gameover info, and sets up interaction paths among widgets. 
+*/
 class Window : public QWidget {
 	Q_OBJECT
 
@@ -18,6 +21,7 @@ public:
 	Window();
 
 public slots:
+	//Pops out a window asking whether the user wants to continue.
 	void gameOver();
 
 protected:
