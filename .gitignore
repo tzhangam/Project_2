@@ -1,5 +1,4 @@
-moc_*
-*.o
+obj/*
 Makefile
 .qmake.stash
 .DS_Store

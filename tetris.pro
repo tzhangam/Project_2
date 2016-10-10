@@ -5,21 +5,11 @@ QT += widgets core
 CONFIG += c++11
 QMAKE_CXXFLAGS += -std=c++11
 
-INCLUDEPATH += ./inc/
-SOURCES += src/main.cpp \
-           src/Block.cpp \
-           src/RenderArea.cpp \
-           src/Panel.cpp \
-           src/PreviewArea.cpp \
-           src/Gameboard.cpp\
-           src/Window.cpp
-HEADERS += inc/Block.h \
-           inc/Gameboard.h \
-           inc/RenderArea.h \
-           inc/Panel.h \
-           inc/PreviewArea.h \
-           inc/Window.h \
-           inc/misc.h
+INCLUDEPATH += inc/
+SOURCES += src/*
+HEADERS += inc/*
 RESOURCES += tetris.qrc
 
-QMAKE_CLEAN += *.o moc_*
+OBJECTS_DIR = obj/
+MOC_DIR = obj/
+QMAKE_CLEAN += obj/*.o obj/moc_*
