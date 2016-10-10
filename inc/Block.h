@@ -35,20 +35,6 @@ public:
 		kDirectionCount
 	};
 
-	enum BlockColor {
-		kRed,
-		kYellow,
-		kGreen,
-		kBlue,
-		kCyan,
-		kPink,
-		kBlack,
-
-		kColorCount,
-
-		kNoBlock
-	};
-
 	enum BlockMotion {
 		kRotateClockwise,
 		kRotateCounterClockwise,
@@ -70,19 +56,17 @@ public:
 		x
 	*/
 	Block(BlockShape shape, int x, int y,
-		BlockDirection direction = kUp, BlockColor color = kRed);
+		BlockDirection direction = kUp);
 	Block(const Block &rhs);
 
 	BlockShape getShape() const { return shape; }
 	BlockDirection getDirection() const { return direction; }
-	Qt::GlobalColor getColor() const { return convert(color); }
+	QColor getColor() const { return color; }
 	int getX() const { return centerX; }
 	int getY() const { return centerY; }
 
 	void setShape(BlockShape shape);
 	void setDirection(BlockDirection direction);
-	void setColor(BlockColor color);
-	void setColor(Qt::GlobalColor color);
 
 	// translation and rotation
 	void move(BlockMotion motion);
@@ -96,38 +80,10 @@ public:
 	*/
 	bool getMap(int row, int col) const;
 
-	static Qt::GlobalColor convert(BlockColor color) {
-		switch (color) {
-			case kRed:         return Qt::red;
-			case kYellow:      return Qt::yellow;
-			case kGreen:       return Qt::green;
-			case kBlue:        return Qt::blue;
-			case kCyan:        return Qt::cyan;
-			case kPink:        return Qt::magenta;
-			case kBlack:       return Qt::black;
-			case kNoBlock:     return Qt::transparent;
-			default:           return Qt::red;
-		}
-	}
-
-	static BlockColor convert(Qt::GlobalColor color) {
-		switch (color) {
-			case Qt::red:         return kRed;
-			case Qt::yellow:      return kYellow;
-			case Qt::green:       return kGreen;
-			case Qt::blue:        return kBlue;
-			case Qt::cyan:        return kCyan;
-			case Qt::magenta:     return kPink;
-			case Qt::black:       return kBlack;
-			case Qt::transparent: return kNoBlock;
-			default:              return kRed;
-		}
-	}
-
 private:
 	BlockShape shape;
 	BlockDirection direction;
-	BlockColor color;
+	QColor color;
 
 	BlockMap map;
 

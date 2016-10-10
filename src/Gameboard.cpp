@@ -118,7 +118,7 @@ bool Gameboard::validate(const Block &candidate, bool isNew) const {
 
 				// conflict with inactive grid
 				if (!grid[row][col].isActive
-					&& grid[row][col].color != Block::BlockColor::kNoBlock)
+					&& grid[row][col].color != Qt::transparent)
 					return false;
 			}
 
@@ -131,7 +131,7 @@ void Gameboard::updateGrid() {
 		for (int j = 0; j < width; ++j)
 			if (grid[i][j].isActive) {
 				grid[i][j].isActive = false;
-				grid[i][j].color = Block::BlockColor::kNoBlock;
+				grid[i][j].color = Qt::transparent;
 			}
 
 	// check if there is active block
@@ -145,7 +145,7 @@ void Gameboard::updateGrid() {
 					int col = activeBlock->getY() + j;
 
 					grid[row][col].isActive = true;
-					grid[row][col].color = Block::convert(activeBlock->getColor());
+					grid[row][col].color = activeBlock->getColor();
 				}
 	}
 
@@ -154,7 +154,7 @@ void Gameboard::updateGrid() {
 
 Block *Gameboard::generateNewBlock() {
 	return new Block(getRandomShape(), 2, width/2,
-				getRandomDirection(), getRandomColor());
+				getRandomDirection());
 }
 
 bool Gameboard::updateActiveBlock() {
@@ -183,10 +183,6 @@ Block::BlockDirection Gameboard::getRandomDirection() const {
 	return Block::BlockDirection(std::rand() % Block::BlockDirection::kDirectionCount);
 }
 
-Block::BlockColor Gameboard::getRandomColor() const {
-	return Block::BlockColor(std::rand() % Block::BlockColor::kColorCount);
-}
-
 const int Gameboard::kNoFullRow = -1;
 
 int Gameboard::getFullRow() const {
@@ -195,7 +191,7 @@ int Gameboard::getFullRow() const {
 		bool isFull = true;
 		for (int col = 0; col < width; ++col)
 			if (grid[row][col].isActive ||
-				grid[row][col].color == Block::BlockColor::kNoBlock) {
+				grid[row][col].color == Qt::transparent) {
 				isFull = false;
 				break;
 			}
@@ -212,7 +208,7 @@ void Gameboard::eliminateRow(int row) {
 			if (grid[i][col].isActive) continue;
 			if (i == 0 || grid[i-1][col].isActive) {
 				grid[i][col].isActive = false;
-				grid[i][col].color = Block::BlockColor::kNoBlock;
+				grid[i][col].color = Qt::transparent;
 			}
 			else {
 				grid[i][col] = grid[i-1][col];
@@ -244,7 +240,7 @@ void Gameboard::reset() {
 	// clear grids
 	for (int i = 0; i < maxHeight; ++i)
 		for (int j = 0; j < maxWidth; ++j) {
-			grid[i][j].color = Block::BlockColor::kNoBlock;
+			grid[i][j].color = Qt::transparent;
 			grid[i][j].isActive = false;
 		}
 	updateGrid();

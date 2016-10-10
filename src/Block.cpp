@@ -4,14 +4,26 @@
 #include <algorithm>
 
 Block::Block(BlockShape shape, int x, int y,
-	BlockDirection direction, BlockColor color)
+	BlockDirection direction)
 	: QObject(),
 	  shape(shape),
 	  direction(direction),
-	  color(color),
+	  color(),
 	  centerX(x),
 	  centerY(y)
-{
+{	
+	// set color according to shape
+	switch (shape) {
+		case kShapeI:     color.setNamedColor(tr("red"));    break;
+		case kShapeL:     color.setNamedColor(tr("cyan"));   break;
+		case kShapeL_Mir: color.setNamedColor(tr("orange")); break;
+		case kShapeT:     color.setNamedColor(tr("magenta")); break;
+		case kShapeZ:     color.setNamedColor(tr("yellow")); break;
+		case kShapeZ_Mir: color.setNamedColor(tr("blue"));   break;
+		case kShapeO:     color.setNamedColor(tr("lime"));   break;
+		default:          color = Qt::transparent;           break;
+	}
+
 	updateMap();
 }
 
@@ -19,10 +31,10 @@ Block::Block(const Block &rhs)
 	: QObject(),
 	  shape(rhs.getShape()),
 	  direction(rhs.getDirection()),
+	  color(rhs.getColor()),
 	  centerX(rhs.getX()),
 	  centerY(rhs.getY())
 {
-	setColor(rhs.getColor());
 	updateMap();
 }
 
@@ -106,15 +118,6 @@ void Block::setShape(BlockShape shape) {
 void Block::setDirection(BlockDirection direction) {
 	this->direction = direction;
 	updateMap();
-}
-
-void Block::setColor(BlockColor color) {
-	this->color = color;
-	updateMap();
-}
-
-void Block::setColor(Qt::GlobalColor color) {
-	setColor(convert(color));
 }
 
 void Block::move(BlockMotion motion) {

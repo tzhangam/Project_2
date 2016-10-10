@@ -151,7 +151,6 @@ Technical Details
       - Keep track of the color, shape, direction and center of the blocks
       - Encode the information of the block shape and direction in to a 5*5 grid map, and provide functions to get information in each grid
       - When a block is rotated, the direction property is changed and information in the grid map is updated
-      - Provide converting function between Qt's predefined color code and the color code used in Block class
 
     - RenderArea
       - Draw the current active block and previous blocks on the game field using QPainter

@@ -31,7 +31,7 @@ void RenderArea::paintEvent(QPaintEvent * /* event */) {
 
 			QRect rect(col*gridSize, row*gridSize, gridSize, gridSize);
 
-			Qt::GlobalColor color = gameboard.getGridColor(row, col);
+			QColor color = gameboard.getGridColor(row, col);
 			
 			painter.setPen(QPen((color == Qt::transparent) ? 
 				Qt::transparent : Qt::black));

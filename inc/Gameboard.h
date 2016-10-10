@@ -22,10 +22,10 @@ public:
 	~Gameboard();
 
 	// for RenderArea class
-	Qt::GlobalColor getGridColor(int row, int col) const {
+	const QColor & getGridColor(int row, int col) const {
 		row = tetris::clamp(0, row, height-1);
 		col = tetris::clamp(0, col, width-1);
-		return Block::convert(grid[row][col].color);
+		return grid[row][col].color;
 	}
 	int getWidth() const { return width; }
 	int getHeight() const { return height; }
@@ -37,9 +37,10 @@ public:
 	int getLevel() const { return level; }
 
 	// for PreviewArea class
-	Qt::GlobalColor getNextBlockColor(int row, int col) const {
-		return (nextBlock->getMap(row, col)) ?
-			nextBlock->getColor() : Block::convert(Block::BlockColor::kNoBlock); 
+	QColor getNextBlockColor(int row, int col) const {
+		QColor ret = nextBlock->getMap(row, col) ?
+			nextBlock->getColor() : Qt::transparent;
+		return ret; 
 	}
 
 public slots:
@@ -60,7 +61,7 @@ signals:
 
 private:
 	typedef struct {
-		Block::BlockColor color;
+		QColor color;
 		bool isActive;
 	} Grid;
 
@@ -101,7 +102,6 @@ private:
 
 	Block::BlockShape getRandomShape() const;
 	Block::BlockDirection getRandomDirection() const;
-	Block::BlockColor getRandomColor() const;
 
 	// row elimination
 	static const int kNoFullRow;
