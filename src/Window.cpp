@@ -32,16 +32,20 @@ Window::Window()
 
 void Window::gameOver() {
 	QMessageBox *msgBox = new QMessageBox();
+
 	msgBox->setWindowTitle(tr("Game Over"));
 	msgBox->setText(tr("Oops, you're dead.."));
+
 	QPushButton *continueButton = msgBox->addButton(
 		tr("&Play again"), QMessageBox::AcceptRole);
 	QPushButton *quitButton = msgBox->addButton(
 		tr("&Quit"), QMessageBox::AcceptRole);
+
 	connect(continueButton, SIGNAL(clicked()),
 		&gameboard, SLOT(resetBoard()));
 	connect(quitButton, SIGNAL(clicked()),
 		qApp, SLOT(quit()));
+
 	msgBox->show();
 }
 
@@ -53,6 +57,8 @@ void Window::keyPressEvent(QKeyEvent *event) {
 		case Qt::Key_Right: gameboard.moveBlock(Block::BlockMotion::kTranslateRight);         break;
 		case Qt::Key_Down:  gameboard.moveBlock(Block::BlockMotion::kTranslateDown);          break;
 		case Qt::Key_Up:    gameboard.startGame();                                            break;
+
+		// unhandled key press
 		default: ;
 	}
 }

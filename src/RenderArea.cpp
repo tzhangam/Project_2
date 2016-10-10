@@ -22,7 +22,8 @@ QSize RenderArea::sizeHint() const {
 void RenderArea::paintEvent(QPaintEvent * /* event */) {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
-	painter.drawPixmap(0, 0, pixmap);//Using painter to draw out the background image first.
+	// draw background image first
+	painter.drawPixmap(0, 0, pixmap);
 
 	for (int col = 0; col < gameboard.getWidth(); ++col)
 		for (int row = 0; row < gameboard.getHeight(); ++row) {

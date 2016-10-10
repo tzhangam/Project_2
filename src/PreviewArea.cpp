@@ -34,7 +34,6 @@ void PreviewArea::paintEvent(QPaintEvent * /* event */) {
 			 painter.setPen(QPen((color == Qt::transparent) ? 
 			 	Qt::transparent : Qt::black));
 			
-			// painter.setPen(QPen(Qt::black));
 			painter.setBrush(QBrush(gameboard.getNextBlockColor(row, col)));
 			painter.drawRect(rect);
 		}

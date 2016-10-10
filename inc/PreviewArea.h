@@ -1,15 +1,19 @@
+/*
+	Class PreviewArea
+	* handles the display of the comint block
+*/
+
 #ifndef PREVIEW_AREA_H
 #define PREVIEW_AREA_H
 
+// backward compatibility
 #include <QtGui>
 #if QT_VERSION >= 0x050000
   #include <QtWidgets>
 #endif // QT_VERSION
 
 #include "Gameboard.h"
-/*
-	Class PreviewArea handles the display of the next coming block.
-*/
+
 class PreviewArea : public QWidget {
 	Q_OBJECT
 

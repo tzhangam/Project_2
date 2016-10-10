@@ -168,7 +168,7 @@ Technical Details
 
   - Communication between modules
     - Use Qt's signal and slot mechanism to trigger update event of each widget
-    - The displaying widget (RenderArea, PreviewArea and Panel) keeps a constant pointer to the Gameboard
+    - The displaying widget (RenderArea, PreviewArea and Panel) keeps a constant reference to the Gameboard
     - When an update is needed, corresponding public functions of the Gameboard will be called to fetch relevent information
 
   - Communication with the user

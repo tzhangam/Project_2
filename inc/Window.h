@@ -1,6 +1,16 @@
+/*
+	Class Window
+	* Contains all other widgets, including render areas for the main game field
+	  and block preview, as well as the score panel
+	* Connects the slots of each widget with the appropriate signal from the Gameboard
+	* Detects key press and activates the corresponding slot of the Gameboard
+	* Shows game over information
+*/
+
 #ifndef WINDOW_H
 #define WINDOW_H
 
+// backward compatibility
 #include <QtGui>
 #if QT_VERSION >= 0x050000
   #include <QtWidgets>
@@ -10,10 +20,7 @@
 #include "Gameboard.h"
 #include "Panel.h"
 #include "PreviewArea.h"
-/*
-	*	Window constitutes of all other the sub widgets. It detects key press, emit game
-	*start and gameover info, and sets up interaction paths among widgets. 
-*/
+
 class Window : public QWidget {
 	Q_OBJECT
 
@@ -21,7 +28,7 @@ public:
 	Window();
 
 public slots:
-	//Pops out a window asking whether the user wants to continue.
+	// Pops out a window asking whether the user wants to continue.
 	void gameOver();
 
 protected:

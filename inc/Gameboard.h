@@ -1,3 +1,10 @@
+/*
+	Class Gameboard
+	* Possesses grid maps for the main game field
+	* Provides functions for block actions and line elimination
+	* Emits update signals to parallel classes after modifications
+*/
+
 #ifndef GAMEBOARD_H
 #define GAMEBOARD_H
 
@@ -5,10 +12,7 @@
 #include "misc.h"
 
 #include <QTimer>
-/*
-	*	Class Gameboard possesses grid maps and provides functions for block actions and line elimination.
-	*It also sends out update signals to parallel classes when modifications were made.
-*/
+
 class Gameboard : public QObject {
 	Q_OBJECT
 
@@ -72,17 +76,21 @@ private:
 	static const int maxGridSize;
 	static const int minGridSize;
 
+	// block and grid map
 	Block *activeBlock, *nextBlock;
 	Grid grid[maxHeight][maxWidth];
 
+	// info for the appearance of the gameboard
 	int width, height, gridSize;
 
+	// generate timeout signals periodically
 	QTimer *timer;
 	volatile bool isGameStart;
 
 	int combo, score, level;
 	
-	//validate new block generation and block motion attempt
+	// validate new block generation and block motion attempt
+	// isNew flag needs to be passed for correct calculation
 	bool validate(const Block &candidate, bool isNew) const;
 	
 	void updateGrid();
@@ -102,7 +110,7 @@ private:
 
 	void resize(int width, int height);
 
-	// start timer and generating new block
+	// start timer and generate new block
 	void start();
 	void reset();
 };

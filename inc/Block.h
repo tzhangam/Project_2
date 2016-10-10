@@ -1,12 +1,15 @@
+/*
+	Class Block
+	* Stores the shape, color, position and orientation for each block
+	* Provides functions for block motion
+*/
+
 #ifndef BLOCK_H
 #define BLOCK_H
 
 #include <QColor>
 #include <QObject>
-/*
-	Class Block stores the shape, color, position and orientation for each block.
-	It provides functions for block motion.
-*/
+
 class Block : public QObject {
 	Q_OBJECT
 
@@ -81,6 +84,7 @@ public:
 	void setColor(BlockColor color);
 	void setColor(Qt::GlobalColor color);
 
+	// translation and rotation
 	void move(BlockMotion motion);
 
 	/*
@@ -129,6 +133,7 @@ private:
 
 	int centerX, centerY;
 
+	// update the internal representation of the block
 	void updateMap();
 };
 

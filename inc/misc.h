@@ -1,7 +1,12 @@
+/*
+	misc.h
+	* Miscellaneous utilities
+*/
+
 #ifndef MISC_H
 #define MISC_H
 
-#include "algorithm"
+#include <algorithm>
 
 namespace tetris {
 

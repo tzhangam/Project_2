@@ -119,6 +119,7 @@ void Block::setColor(Qt::GlobalColor color) {
 
 void Block::move(BlockMotion motion) {
 	switch (motion) {
+		// set the absolute direction correspondingly
 		case kRotateClockwise:
 			switch (direction) {
 				case kUp:    setDirection(kRight); break;
@@ -137,6 +138,7 @@ void Block::move(BlockMotion motion) {
 				default: ;
 			}
 			break;
+		
 		case kTranslateLeft:
 			--centerY;
 			break;

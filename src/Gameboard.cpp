@@ -27,7 +27,7 @@ Gameboard::Gameboard(int height, int width, int gridSize)
 	this->height = tetris::clamp(minHeight, height, maxHeight);
 	this->gridSize = tetris::clamp(minGridSize, gridSize, maxGridSize);
 
-	// seed for random generator
+	// seed for random number generator
 	std::srand(std::time(0));
 	nextBlock = generateNewBlock();
 
@@ -108,7 +108,7 @@ bool Gameboard::validate(const Block &candidate, bool isNew) const {
 				int row = candidate.getX() + i;
 				int col = candidate.getY() + j;
 
-				// for current block
+				// is current active block ?
 				if (!isNew) {
 					// out of gameboard
 					if (!tetris::inRange(0, row, height-1)
@@ -190,7 +190,7 @@ Block::BlockColor Gameboard::getRandomColor() const {
 const int Gameboard::kNoFullRow = -1;
 
 int Gameboard::getFullRow() const {
-	// find full row from bottom
+	// find full row starting from bottom
 	for (int row = height-1; row >= 0; --row) {
 		bool isFull = true;
 		for (int col = 0; col < width; ++col)
@@ -205,7 +205,7 @@ int Gameboard::getFullRow() const {
 }
 
 void Gameboard::eliminateRow(int row) {
-	// shift inactive grids down
+	// shift inactive grids downwards
 	for (int i = row; i >= 0; --i)
 		for (int col = 0; col < width; ++col) {
 			// only update inactive grids
@@ -241,7 +241,7 @@ void Gameboard::start() {
 }
 
 void Gameboard::reset() {
-	// clear grid
+	// clear grids
 	for (int i = 0; i < maxHeight; ++i)
 		for (int j = 0; j < maxWidth; ++j) {
 			grid[i][j].color = Block::BlockColor::kNoBlock;
