@@ -58,10 +58,10 @@ void Block::updateMap() {
 			map[1][2] = map[2][2] = map[2][1] = map[2][3] = true;
 			break;
 		case kShapeZ:
-			map[1][1] = map[1][2] = map[2][2] = map[2][3] = true;
+			map[1][3] = map[2][2] = map[2][3] = map[3][2] = true;
 			break;
 		case kShapeZ_Mir:
-			map[1][3] = map[1][2] = map[2][2] = map[2][1] = true;
+			map[1][2] = map[2][2] = map[2][3] = map[3][3] = true;
 			break;
 		case kShapeO:
 			map[2][1] = map[2][2] = map[3][1] = map[3][2] = true;

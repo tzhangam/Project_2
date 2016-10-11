@@ -5,6 +5,7 @@ PreviewArea::PreviewArea(const Gameboard &gameboard, QWidget *parent)
 	: QWidget(parent),
 	  gameboard(gameboard)
 {
+	setFixedSize(100, 100);
 	setBackgroundRole(QPalette::Base);
 	setAutoFillBackground(true);
 

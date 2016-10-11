@@ -4,6 +4,7 @@ RenderArea::RenderArea(const Gameboard &gameboard, QWidget *parent)
 	: QWidget(parent),
 	  gameboard(gameboard)
 {
+	setFixedSize(200, 400);
 	pixmap.load(":/images/background.bmp");
 	setBackgroundRole(QPalette::WindowText);
 	setAutoFillBackground(true);

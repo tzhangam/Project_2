@@ -102,25 +102,34 @@ void Gameboard::blockDescend() {
 
 bool Gameboard::validate(const Block &candidate, bool isNew) const {
 	int range = Block::BLOCK_HALF_RANGE;
-	for (int i = -range+1; i < range; ++i)
-		for (int j = -range+1; j < range; ++j)
-			if (candidate.getMap(i+range-1, j+range-1)) {
-				int row = candidate.getX() + i;
-				int col = candidate.getY() + j;
+	// is current active block ?
+	if (!isNew) {
+		for (int i = -range+1; i < range; ++i)
+			for (int j = -range+1; j < range; ++j)
+				if (candidate.getMap(i+range-1, j+range-1)) {
+					int row = candidate.getX() + i;
+					int col = candidate.getY() + j;
 
-				// is current active block ?
-				if (!isNew) {
 					// out of gameboard
 					if (!tetris::inRange(0, row, height-1)
 						|| !tetris::inRange(0, col, width-1))
 						return false;
+				
+					// conflict with inactive grid
+					if (!grid[row][col].isActive
+						&& grid[row][col].color != Qt::transparent)
+						return false;
 				}
-
-				// conflict with inactive grid
-				if (!grid[row][col].isActive
-					&& grid[row][col].color != Qt::transparent)
+	}
+	// new block
+	else {
+		for (int row = 0; row < 2; ++row) {
+			for (int col = 0; col < width; ++col) {
+				if (grid[row][col].color != Qt::transparent)
 					return false;
 			}
+		}
+	}
 
 	return true;
 }
@@ -153,8 +162,7 @@ void Gameboard::updateGrid() {
 }
 
 Block *Gameboard::generateNewBlock() {
-	return new Block(getRandomShape(), 2, width/2,
-				getRandomDirection());
+	return new Block(getRandomShape(), 2, width/2);
 }
 
 bool Gameboard::updateActiveBlock() {
